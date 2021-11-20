@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "456865060685",
+    "firebase_url": "https://go4lunch-3b949-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "go4lunch-3b949",
     "storage_bucket": "go4lunch-3b949.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "456865060685-6tsbl2trhptapo9fnfplm1if2no5avos.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.go4lunch",
+            "certificate_hash": "0154e7ae782d16e4b82a3768c248cacce94c8999"
+          }
+        },
         {
           "client_id": "456865060685-24o3ftvi205am9suk0p9jdahr19ho7vt.apps.googleusercontent.com",
           "client_type": 3
