@@ -59,6 +59,7 @@ class DashboardActivity : AppCompatActivity() {
         val signOutBtn = findViewById<Button>(R.id.sign_out_btn)
         val profileImg = findViewById<ImageView>(R.id.profile_image)
 
+        val userProfilebtn = findViewById<Button>(R.id.userProfileBtn)
 
 
 
@@ -76,6 +77,11 @@ class DashboardActivity : AppCompatActivity() {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        userProfilebtn.setOnClickListener {
+            val i = Intent(this, UserProfileActivity::class.java)
+            startActivity(i)
         }
     }
 
