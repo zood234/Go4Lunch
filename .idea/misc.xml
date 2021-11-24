@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/zainm/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
+        <entry key="..\:/Users/zainm/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_details.xml" value="0.1" />
         <entry key="..\:/Users/zainm/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_main.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/zainm/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_sign_in.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/zainm/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_sign_in.xml" value="0.1" />
         <entry key="..\:/Users/zainm/AndroidStudioProjects/Go4Lunch/app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
       </map>
     </option>

@@ -49,8 +49,6 @@ class DashboardActivity : AppCompatActivity() {
         }
 
 
-
-
         val idTxt = findViewById<TextView>(R.id.id_txt)
         val nameTxt = findViewById<TextView>(R.id.name_txt)
         val emailTxt = findViewById<TextView>(R.id.email_txt)
@@ -60,9 +58,6 @@ class DashboardActivity : AppCompatActivity() {
         val profileImg = findViewById<ImageView>(R.id.profile_image)
 
         val userProfilebtn = findViewById<Button>(R.id.userProfileBtn)
-
-
-
         idTxt.text = currentUser?.uid
         nameTxt.text = currentUser?.displayName
         emailTxt.text = currentUser?.email
