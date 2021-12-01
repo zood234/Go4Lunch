@@ -39,7 +39,7 @@ class UserProfileActivity : AppCompatActivity() {
                 val emailTxt = findViewById<TextView>(R.id.tvEmail)
                 nameTxt.text = user.displayName
                 emailTxt.text = user.email
-                getUserProfile()
+                getUserProfilePicture()
 
             }
 
@@ -49,7 +49,7 @@ class UserProfileActivity : AppCompatActivity() {
         })
     }
 
-    private fun getUserProfile() {
+    private fun getUserProfilePicture() {
         val profileIv = findViewById<ImageView>(R.id.circleImageView)
 
       storageReference = FirebaseStorage.getInstance().reference.child("users/" +uid)

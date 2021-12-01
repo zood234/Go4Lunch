@@ -19,10 +19,10 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <Button
-        android:id="@+id/sign_in_btn"
+        android:id="@+id/signInBtn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="208dp"
         android:background="#fff"
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
@@ -33,32 +33,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <Button
-
-        android:id="@+id/sign_in_btn_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:background="#fff"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
-        android:text="@string/sign_in_with_facebook"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.637"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_btn" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button_facebook"
+        android:id="@+id/viewAllProfilesBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:text="View All Profiles"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_btn"
-        app:layout_constraintVertical_bias="0.908" />
+        app:layout_constraintTop_toBottomOf="@+id/signInBtn"
+        app:layout_constraintVertical_bias="0.265" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
