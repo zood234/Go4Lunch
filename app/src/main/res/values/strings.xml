@@ -6,6 +6,7 @@
     <string name="name">Name</string>
     <string name="email_address">Email address</string>
     <string name="sign_out">Sign out</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 
 </resources>

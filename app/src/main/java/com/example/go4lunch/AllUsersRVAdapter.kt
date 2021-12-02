@@ -6,24 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
-import com.squareup.picasso.Picasso
 import java.io.File
 
-class RVAdapter(private val mList: List<User>) : RecyclerView.Adapter<RVAdapter.ViewHolder>() {
+class AllUsersRVAdapter(private val mList: List<User>) : RecyclerView.Adapter<AllUsersRVAdapter.ViewHolder>() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_view_design, parent, false)
+            .inflate(R.layout.card_view_all_users_design, parent, false)
 
         return ViewHolder(view)
     }
@@ -45,11 +42,6 @@ class RVAdapter(private val mList: List<User>) : RecyclerView.Adapter<RVAdapter.
         }.addOnFailureListener{
         }
 
-//        if (ItemsViewModel.imageUrl.isNullOrEmpty()) {
-//            holder.imageView.setImageResource(R.drawable.ic_launcher_background)
-//        } else {
-//            picasso.load(ItemsViewModel.imageUrl).into(holder.imageView)
-//        }
 
     }
 
