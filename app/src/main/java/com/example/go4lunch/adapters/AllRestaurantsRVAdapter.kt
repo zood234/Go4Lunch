@@ -50,13 +50,16 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        //val item = title.get(position)
 
         val item = allRest.get(position)
 
-
         if (item != null) {
-            holder.tvItem.text = item.titleList
+            holder.titleTv.text = item.titleList
+             holder.catTv.text = item.genreList
+            holder.openingTimeTv.text = item.openingHours
+            holder.distanceTv.text = item.latList.toString() + " " + item.lngList.toString()
+            holder.amountOfPeopleTv.text = item.amountOfPeopleGoing
+            holder.reviewTv.text = item.ratingList.toString()
         }
 
 
@@ -67,11 +70,14 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         // Holds the TextView that will add each item to
 
-        val tvItem = view.titleTV
-//        val tvDate = view.tv_date
-//        val tv_cat = view.tv_cat
-//        val iv_picture = view.iv_thumbnail
-//        val cardViewItem = view.card_view_item
+        val titleTv = view.titleTV
+        val restIV = view.restaurantIV
+        val catTv = view.catTV
+        val openingTimeTv = view.openingTimeTV
+        val distanceTv = view.distanceTV
+        val amountOfPeopleTv = view.amountOfPeopleTV
+        val reviewTv = view.reviewTV
+
 
     }
 

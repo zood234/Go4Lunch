@@ -15,12 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.go4lunch.adapters.AllRestaurantsRVAdapter
 import com.example.go4lunch.models.nearbysearch.AllItems
-import com.example.go4lunch.models.nearbysearch.Restaurants
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_listof_restaurants.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.util.*
 
@@ -35,24 +31,24 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     private  lateinit var  locationManager: LocationManager
     private lateinit var  locationListener: LocationListener
     private lateinit var viewModel: AllRestaurantsViewModel
-    lateinit var alluserRV : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listof_restaurants)
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
-        val itemAdapter = AllRestaurantsRVAdapter(this, allRest)
 
-        alluserRV= findViewById<RecyclerView>(R.id.allResaurantsRV)
-        alluserRV.layoutManager = LinearLayoutManager(this)
-        alluserRV.setHasFixedSize(true)
+        getLocalRestaurants()
 
-         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+
+
+    }
+
+    fun getLocalRestaurants(){
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
 
             override fun onLocationChanged(location: Location) {
-                val currentLocation = LatLng(location.latitude, location.longitude)
-
                 val geocoder = Geocoder(this@ListofRestaurantsActivity, Locale.getDefault())
 
                 try {
@@ -60,17 +56,10 @@ class ListofRestaurantsActivity : AppCompatActivity() {
                         geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     if (addressList.size > 0) {
                         println(location.latitude + location.longitude)
-                        println(addressList.get(0).toString())
-                        ///put the search code in here
 
-                        var b = 51.50979902325245
-                        var c = 20 - 0.12624660554017764
-
-
-                            viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString())
-
-                            recyclerView(applicationContext, viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString()))
-                        }
+                        viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString())
+                        recyclerView(viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString()))
+                    }
 
 
                 } catch (e: Exception) {
@@ -78,7 +67,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
                 }
 
 
-        }
+            }
         }
         if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
@@ -93,16 +82,11 @@ class ListofRestaurantsActivity : AppCompatActivity() {
         }
 
         viewModel.liveDataRestaurants.observe(this, androidx.lifecycle.Observer{
-            button.text = it.addressList
-            recyclerView(applicationContext, allRest)
+
+            if (it == true) {
+                recyclerView(viewModel.allRest)
+            }
         })
-
-
-button.setOnClickListener {
-    recyclerView(applicationContext, allRest)
-
-}
-
 
 
 
@@ -111,56 +95,31 @@ button.setOnClickListener {
     }
 
 
-    //Might need this to request permision
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        if (requestCode == 1) {
-//            if(grantResults.size < 1) {
-//                if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1,1f,locationListener)
-//                }
-//            }
-//        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//    }
-//    val listener = object : GoogleMap.OnMapClickListener {
-//        override fun onMapClick(p0: LatLng) {
-//            val geocoder = Geocoder(this@ListofRestaurantsActivity, Locale.getDefault())
-//            if (p0 != null) {
-//                var adress = ""
-//                try {
-//                    val adressList = geocoder.getFromLocation(p0.latitude, p0.longitude, 1)
-//                    if (adressList.size > 0) {
-//                        if (adressList.get(0).thoroughfare != null) {
-//                            adress += adressList.get(0).thoroughfare
-//                            if (adressList.get(0).subThoroughfare != null) {
-//                                adress += adressList.get(0).subThoroughfare
-//                            }
-//                        }
-//                    }
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//            }
-//        }
-//    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 1) {
+            if(grantResults.size < 1) {
+                if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1,1f,locationListener)
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 
-    fun recyclerView( context:Context,  allRest : List<AllItems>)
+    fun recyclerView(allRest: List<AllItems>)
     {
-
-
-        println("Recycler view is now starting")
+        lateinit var alluserRV : RecyclerView
+        alluserRV= findViewById<RecyclerView>(R.id.allResaurantsRV)
+        alluserRV.layoutManager = LinearLayoutManager(this)
+        alluserRV.setHasFixedSize(true)
         // Adapter class is initialized and list is passed in the param.
         val itemAdapter = AllRestaurantsRVAdapter(this, allRest, )
         allResaurantsRV.layoutManager = LinearLayoutManager(this)
         allResaurantsRV.adapter = itemAdapter
-        //updates the recycler view
-      //  delay(10000)
         itemAdapter.notifyDataSetChanged()
     }
-
-    //card_view_all_resaurants_design
-    }
+ }

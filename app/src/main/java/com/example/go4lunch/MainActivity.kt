@@ -8,7 +8,6 @@ import com.example.go4lunch.models.nearbysearch.AllItems
 import com.google.firebase.auth.FirebaseAuth
 import java.util.ArrayList
 
-var allRest = arrayListOf<AllItems>()
 
 class MainActivity : AppCompatActivity() {
 

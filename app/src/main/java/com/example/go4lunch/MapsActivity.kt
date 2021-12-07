@@ -37,12 +37,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
-        println(viewModel.test)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        viewModel.liveDataRestaurants.observe(this, androidx.lifecycle.Observer{
 
+            if (it == true) {
+
+                for(i in 0..viewModel.allRest.size -1){
+                    val currentLocation = LatLng(viewModel.allRest[i].latList, viewModel.allRest[i].lngList)
+
+                    mMap.addMarker(MarkerOptions().position(currentLocation).title(viewModel.allRest[i].titleList))
+                }
+
+
+            }
+        })
     }
 
 
@@ -56,7 +67,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.clear()
                 val currentLocation = LatLng(location.latitude, location.longitude)
                 mMap.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
+                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
+                ////////////////////////////
+
+                viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString())
+
+
+
+
+
+                ////////////////////////////
+
                 val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
 
                 try {
@@ -122,5 +143,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+
+
+
+
+
+
+
 
 }
