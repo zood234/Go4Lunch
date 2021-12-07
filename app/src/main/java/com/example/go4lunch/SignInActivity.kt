@@ -30,6 +30,7 @@ class SignInActivity : AppCompatActivity() {
         val signInBtn = findViewById<Button>(R.id.signInBtn)
         val viewAllBtn = findViewById<Button>(R.id.viewAllProfilesBtn)
         val mapsBtn = findViewById<Button>(R.id.mapsBtn)
+        val listRestBtn = findViewById<Button>(R.id.listRestBtn)
 
 
         signInBtn.setOnClickListener {
@@ -56,6 +57,12 @@ class SignInActivity : AppCompatActivity() {
 
         mapsBtn.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+
+        }
+
+        listRestBtn.setOnClickListener {
+            val intent = Intent(this, ListofRestaurantsActivity::class.java)
             startActivity(intent)
 
         }
