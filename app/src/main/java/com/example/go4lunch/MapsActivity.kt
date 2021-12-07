@@ -1,6 +1,7 @@
 package com.example.go4lunch
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -8,9 +9,11 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.go4lunch.activity.RestaurantActivity
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -19,8 +22,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.go4lunch.databinding.ActivityMapsBinding
+import com.google.android.gms.maps.model.Marker
 import java.lang.Exception
 import java.util.*
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
+
+
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -41,6 +49,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
         viewModel.liveDataRestaurants.observe(this, androidx.lifecycle.Observer{
 
             if (it == true) {
@@ -49,17 +58,43 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val currentLocation = LatLng(viewModel.allRest[i].latList, viewModel.allRest[i].lngList)
 
                     mMap.addMarker(MarkerOptions().position(currentLocation).title(viewModel.allRest[i].titleList))
+
                 }
 
 
             }
         })
+
+
     }
 
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.setOnMapClickListener(listener)
+
+
+        mMap.setOnMarkerClickListener { marker ->
+            if (marker.isInfoWindowShown) {
+                marker.hideInfoWindow()
+            } else {
+                marker.showInfoWindow()
+                println("marker was presed" + marker.title)
+                if (marker.title == "You are here" || marker.title =="Last Know Location"){
+                    println("User Clicked last known location")
+                }
+                else{
+
+                val intent = Intent(this, RestaurantActivity::class.java)
+                    intent.putExtra("Name", marker.title)
+                startActivity(intent)}
+
+            }
+            true
+        }
+
+
+
+
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener{
 
@@ -68,15 +103,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val currentLocation = LatLng(location.latitude, location.longitude)
                 mMap.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
                  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
-                ////////////////////////////
 
                 viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString())
-
-
-
-
-
-                ////////////////////////////
 
                 val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
 
@@ -103,6 +131,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(last_knownLatLang,15f))
             }
         }
+
 
     }
 
@@ -143,9 +172,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
-
-
 
 
 
