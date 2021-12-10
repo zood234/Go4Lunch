@@ -8,14 +8,16 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.*
 
 class WriteProfileActivity : AppCompatActivity() {
+    var doesTheUserExist: MutableLiveData<Boolean> = MutableLiveData()
 
      lateinit var mAuth: FirebaseAuth
       lateinit var databaseRefrence :DatabaseReference
@@ -32,28 +34,19 @@ class WriteProfileActivity : AppCompatActivity() {
 
         val user = User(currentUser?.uid,currentUser?.displayName,currentUser?.email,"",false)
 
-        addUsersMockData()
-        currentUser?.uid?.let {
-            databaseRefrence.child(it).setValue(user).addOnCompleteListener{
-                if(it.isSuccessful){
-                 //   User this to store profiles
-                    uploadProfilePic(currentUser?.uid, currentUser?.photoUrl)
-                } else{
-                    Toast.makeText(this,"Failed to update profile", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+      //  addUsersMockData()
+        //Working but need to make so the user uploads the profile
+
 
 
         val idTxt = findViewById<TextView>(R.id.id_txt)
         val nameTxt = findViewById<TextView>(R.id.name_txt)
         val emailTxt = findViewById<TextView>(R.id.email_txt)
-
-
         val signOutBtn = findViewById<Button>(R.id.sign_out_btn)
         val profileImg = findViewById<ImageView>(R.id.profile_image)
-
         val userProfilebtn = findViewById<Button>(R.id.userProfileBtn)
+        val createProfieBtn = findViewById<Button>(R.id.createProfileBtn)
+
         idTxt.text = currentUser?.uid
         nameTxt.text = currentUser?.displayName
         emailTxt.text = currentUser?.email
@@ -61,6 +54,18 @@ class WriteProfileActivity : AppCompatActivity() {
         val picasso = Picasso.get()
         picasso.load(currentUser?.photoUrl).into(profileImg)
         println("IMAGE IS " + profileImg)
+
+
+            //checkIfUserExists(currentUser?.uid)
+        getUserData(currentUser?.uid)
+
+
+        doesTheUserExist.observe(this, androidx.lifecycle.Observer{
+
+            if (it == true) {
+                val i = Intent(this, UserProfileActivity::class.java)
+                startActivity(i)            }
+        })
 
         signOutBtn.setOnClickListener {
             mAuth.signOut()
@@ -73,9 +78,33 @@ class WriteProfileActivity : AppCompatActivity() {
             val i = Intent(this, UserProfileActivity::class.java)
             startActivity(i)
         }
+
+
+        createProfieBtn.setOnClickListener {
+            createProfile()
     }
 
 
+    }
+
+    fun createProfile(){
+        val currentUser = mAuth.currentUser
+        val user = User(currentUser?.uid,currentUser?.displayName,currentUser?.email,"",false)
+
+        currentUser?.uid?.let {
+            databaseRefrence.child(it).setValue(user).addOnCompleteListener{
+                if(it.isSuccessful){
+                    //   User this to store profiles
+                    uploadProfilePic(currentUser?.uid, currentUser?.photoUrl)
+                    Toast.makeText(this,"User Created", Toast.LENGTH_SHORT).show()
+
+                } else{
+                    Toast.makeText(this,"Failed to update profile", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        println("Create Profile")
+    }
     private fun uploadProfilePic( uid: String?, uri: Uri?) {
 
         imageUri = Uri.parse("android.resource://$packageName/${R.drawable.profile}")
@@ -87,6 +116,17 @@ class WriteProfileActivity : AppCompatActivity() {
 
 
     }
+
+//     fun checkIfUserExists(currentUserID: String?){
+//        if (getUserData(currentUserID)==true){
+//            println("This has been activated")
+//            val i = Intent(this, UserProfileActivity::class.java)
+//            startActivity(i)
+//        }
+//         if (getUserData(currentUserID)==false){
+//            println("Create user")
+//        }
+//    }
 
     fun addUsersMockData(){
         val mockDataUsers = arrayOfNulls<User>(10)
@@ -174,5 +214,40 @@ class WriteProfileActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun getUserData(id:String?){
+
+        var databaseReference: DatabaseReference
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        databaseReference.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    for(userSnapshot in snapshot.children){
+                        val user = userSnapshot.getValue(User::class.java)
+                        if (user != null) {
+                            if (user.userId== id){
+                                println("THE USER EXISTS")
+                                doesTheUserExist.postValue(true)
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                println("Error")
+            }
+
+
+        })
+
+
+
+    }
+
+
 
 }

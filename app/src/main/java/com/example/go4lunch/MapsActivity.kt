@@ -9,7 +9,10 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -22,12 +25,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.go4lunch.databinding.ActivityMapsBinding
-import com.google.android.gms.maps.model.Marker
 import java.lang.Exception
 import java.util.*
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
-
-
+import kotlinx.android.synthetic.main.activity_listof_restaurants.*
+import kotlinx.android.synthetic.main.activity_maps.*
+import kotlinx.android.synthetic.main.activity_user_profile.*
+import kotlinx.android.synthetic.main.nav_header.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -37,7 +40,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private  lateinit var  locationManager: LocationManager
     private lateinit var  locationListener: LocationListener
     private lateinit var viewModel: AllRestaurantsViewModel
-
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +52,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        toggle = ActionBarDrawerToggle(this,drawerLayoutMaps,R.string.open, R.string.close)
+//        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        navViewMaps.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.mYourLunch -> startUserProfile()
+                R.id.mSettings -> Toast.makeText(applicationContext,"item 2",Toast.LENGTH_SHORT).show()
+                R.id.mLogout -> Toast.makeText(applicationContext,"item 3",Toast.LENGTH_SHORT).show()
+
+            }
+            true
+        }
+
+
+        mapAllUsersBtn.setOnClickListener {
+            val intent = Intent(this, AllUsersActivity::class.java)
+            startActivity(intent)
+
+        }
+
+
+
+        mapListBtn.setOnClickListener {
+            val intent = Intent(this, ListofRestaurantsActivity::class.java)
+            startActivity(intent)
+
+        }
+
+
+
+
+
+
 
         viewModel.liveDataRestaurants.observe(this, androidx.lifecycle.Observer{
 
@@ -174,7 +213,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
+    //inflates the menu
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_bar_menu, menu)
 
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        textView3.text = "blah balh"
+        if (toggle.onOptionsItemSelected(item)){
+            return true
+        }
 
-
+        return super.onOptionsItemSelected(item)
+    }
+    fun startUserProfile(){
+        val intent = Intent(this, UserProfileActivity::class.java)
+        startActivity(intent)
+    }
 }

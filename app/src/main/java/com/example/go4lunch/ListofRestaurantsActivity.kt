@@ -1,6 +1,7 @@
 package com.example.go4lunch
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
@@ -8,6 +9,10 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +22,9 @@ import com.example.go4lunch.adapters.AllRestaurantsRVAdapter
 import com.example.go4lunch.models.nearbysearch.AllItems
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_listof_restaurants.*
+import kotlinx.android.synthetic.main.activity_restaurant.*
+import kotlinx.android.synthetic.main.activity_user_profile.*
+import kotlinx.android.synthetic.main.nav_header.*
 import java.lang.Exception
 import java.util.*
 
@@ -31,19 +39,57 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     private  lateinit var  locationManager: LocationManager
     private lateinit var  locationListener: LocationListener
     private lateinit var viewModel: AllRestaurantsViewModel
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listof_restaurants)
+//        val listRestBtn = findViewById<Button>(R.id.listRestBtn)
+
+//
+      toggle = ActionBarDrawerToggle(this,drawerLayoutRest,R.string.open, R.string.close)
+//        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
+
+        navViewRest.setNavigationItemSelectedListener {
+
+
+
+            when(it.itemId){
+                R.id.mYourLunch -> startUserProfile()
+                R.id.mSettings -> Toast.makeText(applicationContext,"item 2",Toast.LENGTH_SHORT).show()
+                R.id.mLogout -> Toast.makeText(applicationContext,"item 3",Toast.LENGTH_SHORT).show()
+
+            }
+            true
+        }
+
 
         getLocalRestaurants()
 
 
+        allRestAllUsersBtn.setOnClickListener {
+            val intent = Intent(this, AllUsersActivity::class.java)
+            startActivity(intent)
 
+        }
+
+
+        allRestMapBtn.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+
+        }
 
     }
 
+
+    fun startUserProfile(){
+        val intent = Intent(this, UserProfileActivity::class.java)
+        startActivity(intent)
+    }
     fun getLocalRestaurants(){
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
@@ -94,7 +140,20 @@ class ListofRestaurantsActivity : AppCompatActivity() {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        textView3.text = "blah balh"
+        if (toggle.onOptionsItemSelected(item)){
+            return true
+        }
 
+        return super.onOptionsItemSelected(item)
+    }
+    //inflates the menu
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_bar_menu, menu)
+
+        return true
+    }
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

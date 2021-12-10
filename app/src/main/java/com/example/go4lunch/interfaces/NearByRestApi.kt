@@ -19,9 +19,7 @@ interface NearByRestApi {
     ): nearByRest
 
 
-    //https://maps.googleapis.com/maps/api/place/details/json
-    //  ?place_id=ChIJq5XIW8oEdkgRqmg5RAC_ih8
-    //  &key=AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc
+    //https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJq5XIW8oEdkgRqmg5RAC_ih8&key=AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc
     @GET("details/json?")
     suspend fun getPlaceDetails(
         @Query("place_id") loc: String?, @Query("key") key: String?
