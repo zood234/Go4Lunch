@@ -25,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.go4lunch.databinding.ActivityMapsBinding
+import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
 import java.util.*
 import kotlinx.android.synthetic.main.activity_listof_restaurants.*
@@ -62,7 +63,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             when(it.itemId){
                 R.id.mYourLunch -> startUserProfile()
                 R.id.mSettings -> Toast.makeText(applicationContext,"item 2",Toast.LENGTH_SHORT).show()
-                R.id.mLogout -> Toast.makeText(applicationContext,"item 3",Toast.LENGTH_SHORT).show()
+                R.id.mLogout -> signOut()
 
             }
             true
@@ -230,5 +231,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     fun startUserProfile(){
         val intent = Intent(this, UserProfileActivity::class.java)
         startActivity(intent)
+    }
+
+    fun signOut() {
+        var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
+
+        mAuth.signOut()
+        val intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

@@ -2,11 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/miSearch"
-        android:title="Search"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom"/>
+<!--    <item-->
+<!--        android:id="@+id/app_bar_search"-->
+<!--        android:icon="@drawable/ic_search_black_24dp"-->
+<!--        android:title="Search"-->
+<!--        app:actionViewClass="android.widget.SearchView"-->
+<!--        app:showAsAction="always" />-->
 
+    <item
+        android:title="search"
+        android:id="@+id/search_box"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
 
 </menu>

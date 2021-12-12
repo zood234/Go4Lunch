@@ -2,13 +2,12 @@ package com.example.go4lunch
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -23,6 +22,7 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var storageReference: StorageReference
     private lateinit var user:User
     private lateinit var  uid :String
+
 lateinit var toggle:ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,12 @@ lateinit var toggle:ActionBarDrawerToggle
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
+        ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,typesOfFood).also {
+            adapter -> searchTestTV.setAdapter(adapter)
 
+
+        }
 
         userAllUsersBtn.setOnClickListener {
             val intent = Intent(this, AllUsersActivity::class.java)
@@ -52,6 +57,10 @@ lateinit var toggle:ActionBarDrawerToggle
             startActivity(intent)
 
         }
+
+
+
+
 navView.setNavigationItemSelectedListener {
 
     when(it.itemId){
@@ -88,6 +97,31 @@ navView.setNavigationItemSelectedListener {
     //inflates the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
+    val searchItem = menu?.findItem(R.id.search_box)
+        if (searchItem != null){
+            val searchView = searchItem.actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText!!.isEmpty()){
+
+                    }else{
+                        println("A Toast")
+
+                        ///////Put the search request hear and make it so its more than three characters
+                    }
+                    return true
+                }
+
+            })
+
+
+        }
+
+
 
         return true
     }

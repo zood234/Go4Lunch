@@ -1,6 +1,8 @@
 package com.example.go4lunch
 
 import android.app.Application
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +11,7 @@ import com.example.go4lunch.interfaces.NearByRestApi
 import com.example.go4lunch.models.nearbysearch.AllItems
 import com.example.go4lunch.models.nearbysearch.Restaurants
 import com.example.harrypottercaracters.RetroInstance
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -16,7 +19,6 @@ import java.io.IOException
 class AllRestaurantsViewModel(application: Application) : AndroidViewModel(application) {
 
     var allRest = arrayListOf<AllItems>()
-
 var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -73,9 +75,6 @@ var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
 
         }
     }
-
-
-
 
 
 

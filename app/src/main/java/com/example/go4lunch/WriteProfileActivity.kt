@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,6 +16,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_write_profile.*
 import kotlinx.coroutines.*
 
 class WriteProfileActivity : AppCompatActivity() {
@@ -23,6 +26,7 @@ class WriteProfileActivity : AppCompatActivity() {
       lateinit var databaseRefrence :DatabaseReference
      lateinit var storageRefrence: StorageReference
      private lateinit var  imageUri : Uri
+    private val pickImage = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +48,13 @@ class WriteProfileActivity : AppCompatActivity() {
         val emailTxt = findViewById<TextView>(R.id.email_txt)
         val signOutBtn = findViewById<Button>(R.id.sign_out_btn)
         val profileImg = findViewById<ImageView>(R.id.profile_image)
-        val userProfilebtn = findViewById<Button>(R.id.userProfileBtn)
+      //  val userProfilebtn = findViewById<Button>(R.id.userProfileBtn)
         val createProfieBtn = findViewById<Button>(R.id.createProfileBtn)
-
+        val uploadImageBtn = findViewById<Button>(R.id.uploadImageBtn)
         idTxt.text = currentUser?.uid
         nameTxt.text = currentUser?.displayName
         emailTxt.text = currentUser?.email
-
+        createProfieBtn.visibility = View.GONE
         val picasso = Picasso.get()
         picasso.load(currentUser?.photoUrl).into(profileImg)
         println("IMAGE IS " + profileImg)
@@ -74,17 +78,17 @@ class WriteProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        userProfilebtn.setOnClickListener {
-            val i = Intent(this, UserProfileActivity::class.java)
-            startActivity(i)
-        }
 
 
         createProfieBtn.setOnClickListener {
             createProfile()
     }
 
+        uploadImageBtn.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, pickImage)
 
+        }
     }
 
     fun createProfile(){
@@ -95,7 +99,7 @@ class WriteProfileActivity : AppCompatActivity() {
             databaseRefrence.child(it).setValue(user).addOnCompleteListener{
                 if(it.isSuccessful){
                     //   User this to store profiles
-                    uploadProfilePic(currentUser?.uid, currentUser?.photoUrl)
+                    uploadProfilePic(currentUser?.uid, imageUri)
                     Toast.makeText(this,"User Created", Toast.LENGTH_SHORT).show()
 
                 } else{
@@ -106,15 +110,21 @@ class WriteProfileActivity : AppCompatActivity() {
         println("Create Profile")
     }
     private fun uploadProfilePic( uid: String?, uri: Uri?) {
+        val createProfieBtn = findViewById<Button>(R.id.createProfileBtn)
 
-        imageUri = Uri.parse("android.resource://$packageName/${R.drawable.profile}")
+       // imageUri = Uri.parse("android.resource://$packageName/${R.drawable.profile}")
+
+        if (uri != null) {
+            imageUri = uri
+        }
+
         storageRefrence = FirebaseStorage.getInstance().getReference("users/" + uid)
         storageRefrence.putFile(imageUri).addOnSuccessListener {
+            createProfieBtn.visibility = View.VISIBLE
+
         }.addOnFailureListener{
         Toast.makeText(this,"Failed to update image", Toast.LENGTH_SHORT).show()
             }
-
-
     }
 
 //     fun checkIfUserExists(currentUserID: String?){
@@ -247,7 +257,18 @@ class WriteProfileActivity : AppCompatActivity() {
 
 
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            imageUri = data?.data!!
+            profile_image.setImageURI(imageUri)
 
+                uploadProfilePic("d34s", imageUri)
+
+
+
+        }
+    }
 
 
 }

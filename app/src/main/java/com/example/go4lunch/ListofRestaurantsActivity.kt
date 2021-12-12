@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.go4lunch.adapters.AllRestaurantsRVAdapter
 import com.example.go4lunch.models.nearbysearch.AllItems
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_listof_restaurants.*
 import kotlinx.android.synthetic.main.activity_restaurant.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
@@ -60,7 +61,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.mYourLunch -> startUserProfile()
                 R.id.mSettings -> Toast.makeText(applicationContext,"item 2",Toast.LENGTH_SHORT).show()
-                R.id.mLogout -> Toast.makeText(applicationContext,"item 3",Toast.LENGTH_SHORT).show()
+                R.id.mLogout -> signOut()
 
             }
             true
@@ -180,5 +181,16 @@ class ListofRestaurantsActivity : AppCompatActivity() {
         allResaurantsRV.layoutManager = LinearLayoutManager(this)
         allResaurantsRV.adapter = itemAdapter
         itemAdapter.notifyDataSetChanged()
+    }
+
+
+    fun signOut() {
+        var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
+
+        mAuth.signOut()
+        val intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent)
+        finish()
     }
  }

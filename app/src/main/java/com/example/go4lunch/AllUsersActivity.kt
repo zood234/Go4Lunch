@@ -7,8 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_all_users.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
@@ -19,11 +21,13 @@ class AllUsersActivity : AppCompatActivity() {
     lateinit var allDataUsers : ArrayList<User>
     lateinit var alluserRV : RecyclerView
     lateinit var toggle: ActionBarDrawerToggle
+    lateinit var mAuth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_users)
+        mAuth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         alluserRV= findViewById<RecyclerView>(R.id.allUsersRV)
         alluserRV.layoutManager = LinearLayoutManager(this)
@@ -38,7 +42,7 @@ class AllUsersActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.mYourLunch -> startUserProfile()
                 R.id.mSettings -> Toast.makeText(applicationContext,"item 2",Toast.LENGTH_SHORT).show()
-                R.id.mLogout -> Toast.makeText(applicationContext,"item 3",Toast.LENGTH_SHORT).show()
+                R.id.mLogout -> signOut()
 
             }
             true
@@ -74,6 +78,15 @@ class AllUsersActivity : AppCompatActivity() {
     fun startUserProfile(){
         val intent = Intent(this, UserProfileActivity::class.java)
         startActivity(intent)
+    }
+
+
+    fun signOut() {
+        mAuth.signOut()
+        val intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
     private fun getUserData() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")

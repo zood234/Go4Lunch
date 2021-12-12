@@ -9,6 +9,11 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-
+    <string-array name="food_type">
+        <item> "japanese"</item>
+        <item> "pub"</item>
+        <item> "american"</item>
+        <item> "indian"</item>
+    </string-array>
 
 </resources>
