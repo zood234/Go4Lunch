@@ -66,7 +66,7 @@ navView.setNavigationItemSelectedListener {
     when(it.itemId){
         R.id.mYourLunch -> Toast.makeText(applicationContext,"item 1",Toast.LENGTH_SHORT).show()
         R.id.mSettings -> Toast.makeText(applicationContext,"item 2",Toast.LENGTH_SHORT).show()
-        R.id.mLogout -> Toast.makeText(applicationContext,"item 3",Toast.LENGTH_SHORT).show()
+        R.id.mLogout -> signOut()
 
     }
     true
@@ -186,5 +186,13 @@ navView.setNavigationItemSelectedListener {
         }
     }
 
+    fun signOut() {
+        var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
 
+        mAuth.signOut()
+        val intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }

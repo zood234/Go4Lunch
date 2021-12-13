@@ -12,12 +12,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.*
 import android.content.pm.PackageManager
 
-import android.content.pm.PackageInfo
 import android.util.Base64
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -45,9 +45,78 @@ class SignInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_in)
         callbackManager = CallbackManager.Factory.create()
         val signInBtn = findViewById<Button>(R.id.signInBtn)
+        //val signInBtnGoogle = findViewById<Button>(R.id.signInGoogleBtn)
+
         val viewAllBtn = findViewById<Button>(R.id.viewAllProfilesBtn)
         val mapsBtn = findViewById<Button>(R.id.mapsBtn)
         val listRestBtn = findViewById<Button>(R.id.listRestBtn)
+
+
+        createAccountEmailBtn.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.create_account_layout, null)
+            val emailET = dialogLayout.findViewById<EditText>(R.id.emailET)
+            val passwordET = dialogLayout.findViewById<EditText>(R.id.passwordET)
+            val passwordCheckerET = dialogLayout.findViewById<EditText>(R.id.passwordCheckerET)
+
+            with(builder) {
+                setTitle("Create Your Account")
+                setPositiveButton("Submit") { _, _ ->
+//                    if(editText.text.toString().length >3) {
+//                        Days.currentDay[2] = editText.text.toString()
+//                    }
+                    println(emailET.text.toString())
+                    println(passwordET.text.toString())
+                    println(passwordCheckerET.text.toString())
+                    createAccountEmail(emailET.text.toString(),passwordET.text.toString())
+                }
+                setNegativeButton("Cancel") { _, _ ->
+                    Log.d("main", "Negative Button Clicked")
+                }
+                setView(dialogLayout)
+                show()
+            }
+        }
+
+
+        signInBtnEmail.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.sign_in_email_layout, null)
+            val emailET = dialogLayout.findViewById<EditText>(R.id.emailSignInET)
+            val passwordET = dialogLayout.findViewById<EditText>(R.id.passwordSignInET)
+
+            with(builder) {
+                setTitle("Create Your Account")
+                setPositiveButton("Submit") { _, _ ->
+//                    if(editText.text.toString().length >3) {
+//                        Days.currentDay[2] = editText.text.toString()
+//                    }
+                    println(emailET.text.toString())
+                    println(passwordET.text.toString())
+                    signInEmail(emailET.text.toString(),passwordET.text.toString())
+
+
+                }
+                setNegativeButton("Cancel") { _, _ ->
+                    Log.d("main", "Negative Button Clicked")
+                }
+                setView(dialogLayout)
+                show()
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
 
 
         //Prints key hash
@@ -120,7 +189,7 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-        signInBtn.setOnClickListener {
+        signInGoogleBtn.setOnClickListener {
             // Configure Google Sign In
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("456865060685-24o3ftvi205am9suk0p9jdahr19ho7vt.apps.googleusercontent.com")
@@ -235,5 +304,44 @@ fun startWriteProfileActivity(){
             }
     }
 
+    fun createAccountEmail(email:String,password:String){
+        mAuth = FirebaseAuth.getInstance()
+        mAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user = mAuth.currentUser
+                    println("The user ${mAuth.currentUser} was created")
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
 
+    fun signInEmail(email:String,password:String){
+        mAuth = FirebaseAuth.getInstance()
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = mAuth.currentUser
+                    println("The user ${mAuth.currentUser} was signed in")
+
+                    startWriteProfileActivity()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+
+    }
 }
