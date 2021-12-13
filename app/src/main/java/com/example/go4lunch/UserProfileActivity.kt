@@ -33,9 +33,9 @@ lateinit var toggle:ActionBarDrawerToggle
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
+
         ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,typesOfFood).also {
             adapter -> searchTestTV.setAdapter(adapter)
-
 
         }
 
@@ -97,34 +97,60 @@ navView.setNavigationItemSelectedListener {
     //inflates the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
-    val searchItem = menu?.findItem(R.id.search_box)
-        if (searchItem != null){
-            val searchView = searchItem.actionView as SearchView
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-                }
+    //val searchItem = menu?.findItem(R.id.search_box)
+ val searchItem2 = menu?.findItem(R.id.auto_search_box)
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText!!.isEmpty()){
 
-                    }else{
-                        println("A Toast")
+        val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
 
-                        ///////Put the search request hear and make it so its more than three characters
-                    }
-                    return true
-                }
+        if (searchItem2 != null) {
+            val searchView2 = searchItem2.actionView as AutoCompleteTextView
 
-            })
+            ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,typesOfFood).also {
+                adapter -> searchView2.setAdapter(adapter)
+                searchView2.setOnItemClickListener { parent, view, position, id -> println("It Worked " + searchView2.text) }/// Put the function for retro fit here
+        }
+
+
 
 
         }
 
 
 
+
+
+
+//        if (searchItem != null){
+//            val searchView = searchItem.actionView as SearchView
+//
+//            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+//                override fun onQueryTextSubmit(query: String?): Boolean {
+//                return true
+//                }
+//
+//                override fun onQueryTextChange(newText: String?): Boolean {
+//                    if (newText!!.isEmpty()){
+//
+//                    }else{
+//                        println("A Toast")
+//
+//                        ///////Put the search request hear and make it so its more than three characters
+//                    }
+//                    return true
+//                }
+//
+//            })
+//
+//
+//        }
+
+
+
+
         return true
-    }
+
+        }
 
     private fun getUserData() {
         databaseReference.child(uid).addValueEventListener(object  : ValueEventListener{

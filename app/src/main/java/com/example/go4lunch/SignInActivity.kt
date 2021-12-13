@@ -1,5 +1,6 @@
 package com.example.go4lunch
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,10 +13,25 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
+import android.content.pm.PackageManager
+
+import android.content.pm.PackageInfo
+import android.util.Base64
+import android.widget.Toast
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
+import com.google.firebase.auth.FacebookAuthProvider
+import kotlinx.android.synthetic.main.activity_sign_in.*
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 class SignInActivity : AppCompatActivity() {
 
-
+    lateinit var callbackManager: CallbackManager
 
     companion object {
         private const val RC_SIGN_IN = 120
@@ -27,11 +43,81 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-
+        callbackManager = CallbackManager.Factory.create()
         val signInBtn = findViewById<Button>(R.id.signInBtn)
         val viewAllBtn = findViewById<Button>(R.id.viewAllProfilesBtn)
         val mapsBtn = findViewById<Button>(R.id.mapsBtn)
         val listRestBtn = findViewById<Button>(R.id.listRestBtn)
+
+
+        //Prints key hash
+        try {
+            val info = packageManager.getPackageInfo(
+                packageName,
+                PackageManager.GET_SIGNATURES
+            )
+            for (signature in info.signatures) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+               println("KeyHash: "+ Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: NoSuchAlgorithmException) {
+        }
+
+///facebook sign in
+        buttonFacebookLogin.setReadPermissions("email", "public_profile")
+        buttonFacebookLogin.registerCallback(callbackManager, object :
+            FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                Log.d(TAG, "facebook:onSuccess:$loginResult")
+                println("IT WORKED HERE IS YOUR ID " + loginResult.accessToken)
+                mAuth = FirebaseAuth.getInstance()
+
+                handleFacebookAccessToken(loginResult.accessToken)
+
+
+
+
+
+                //val credential = GoogleAuthProvider.getCredential(idToken, null)
+
+
+            //    startWriteProfileActivity()
+                //handleFacebookAccessToken(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+                Log.d(TAG, "facebook:onCancel")
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d(TAG, "facebook:onError", error)
+            }
+        })
+        // ...
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+
+            // Pass the activity result back to the Facebook SDK
+            callbackManager.onActivityResult(requestCode, resultCode, data)
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         signInBtn.setOnClickListener {
@@ -115,10 +201,39 @@ class SignInActivity : AppCompatActivity() {
                     Log.d("SignInActivity", "signInWithCredential:failure")
                 }
             }
+
+
+
+
     }
 
+fun startWriteProfileActivity(){
+    val intent = Intent(this, WriteProfileActivity::class.java)
+    startActivity(intent)
+    finish()
+}
+    fun handleFacebookAccessToken(token: AccessToken) {
+        Log.d(TAG, "handleFacebookAccessToken:$token")
 
-
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        mAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = mAuth.currentUser
+                    println("Auth user is " + mAuth.currentUser)
+                    startWriteProfileActivity()
+                    // updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    //updateUI(null)
+                }
+            }
+    }
 
 
 }
