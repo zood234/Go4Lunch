@@ -44,12 +44,8 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         callbackManager = CallbackManager.Factory.create()
-        val signInBtn = findViewById<Button>(R.id.signInBtn)
-        //val signInBtnGoogle = findViewById<Button>(R.id.signInGoogleBtn)
 
-        val viewAllBtn = findViewById<Button>(R.id.viewAllProfilesBtn)
-        val mapsBtn = findViewById<Button>(R.id.mapsBtn)
-        val listRestBtn = findViewById<Button>(R.id.listRestBtn)
+
 
 
         createAccountEmailBtn.setOnClickListener {
@@ -81,30 +77,32 @@ class SignInActivity : AppCompatActivity() {
 
 
         signInBtnEmail.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            val inflater = layoutInflater
-            val dialogLayout = inflater.inflate(R.layout.sign_in_email_layout, null)
-            val emailET = dialogLayout.findViewById<EditText>(R.id.emailSignInET)
-            val passwordET = dialogLayout.findViewById<EditText>(R.id.passwordSignInET)
 
-            with(builder) {
-                setTitle("Create Your Account")
-                setPositiveButton("Submit") { _, _ ->
-//                    if(editText.text.toString().length >3) {
-//                        Days.currentDay[2] = editText.text.toString()
-//                    }
-                    println(emailET.text.toString())
-                    println(passwordET.text.toString())
-                    signInEmail(emailET.text.toString(),passwordET.text.toString())
+            val intent = Intent(this, ListofRestaurantsActivity::class.java)
+            startActivity(intent)
 
-
-                }
-                setNegativeButton("Cancel") { _, _ ->
-                    Log.d("main", "Negative Button Clicked")
-                }
-                setView(dialogLayout)
-                show()
-            }
+            //Working just needed button
+//            val builder = AlertDialog.Builder(this)
+//            val inflater = layoutInflater
+//            val dialogLayout = inflater.inflate(R.layout.sign_in_email_layout, null)
+//            val emailET = dialogLayout.findViewById<EditText>(R.id.emailSignInET)
+//            val passwordET = dialogLayout.findViewById<EditText>(R.id.passwordSignInET)
+//
+//            with(builder) {
+//                setTitle("Create Your Account")
+//                setPositiveButton("Submit") { _, _ ->
+//                    println(emailET.text.toString())
+//                    println(passwordET.text.toString())
+//                    signInEmail(emailET.text.toString(),passwordET.text.toString())
+//
+//
+//                }
+//                setNegativeButton("Cancel") { _, _ ->
+//                    Log.d("main", "Negative Button Clicked")
+//                }
+//                setView(dialogLayout)
+//                show()
+//            }
         }
 
 
@@ -203,25 +201,7 @@ class SignInActivity : AppCompatActivity() {
         }
 
 
-        viewAllBtn.setOnClickListener {
-            val intent = Intent(this, AllUsersActivity::class.java)
-            startActivity(intent)
 
-        }
-
-
-
-        mapsBtn.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            startActivity(intent)
-
-        }
-
-        listRestBtn.setOnClickListener {
-            val intent = Intent(this, ListofRestaurantsActivity::class.java)
-            startActivity(intent)
-
-        }
     }
 
 

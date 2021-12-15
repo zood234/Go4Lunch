@@ -34,10 +34,7 @@ lateinit var toggle:ActionBarDrawerToggle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
 
-        ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,typesOfFood).also {
-            adapter -> searchTestTV.setAdapter(adapter)
 
-        }
 
         userAllUsersBtn.setOnClickListener {
             val intent = Intent(this, AllUsersActivity::class.java)

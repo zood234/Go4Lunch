@@ -24,6 +24,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Go4Lunch">
+
+
         <activity
             android:name=".activity.RestaurantActivity"
             android:exported="false" />
@@ -83,6 +85,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
+
+
     </application>
 
 </manifest>

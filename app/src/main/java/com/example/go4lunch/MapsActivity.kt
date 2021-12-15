@@ -25,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.go4lunch.databinding.ActivityMapsBinding
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
 import java.util.*
@@ -32,6 +33,10 @@ import kotlinx.android.synthetic.main.activity_listof_restaurants.*
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.nav_header.*
+import com.google.android.gms.maps.model.Marker
+
+
+
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -112,8 +117,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-
         mMap.setOnMarkerClickListener { marker ->
+            marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             if (marker.isInfoWindowShown) {
                 marker.hideInfoWindow()
             } else {
@@ -123,7 +128,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     println("User Clicked last known location")
                 }
                 else{
-
+                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 val intent = Intent(this, RestaurantActivity::class.java)
                     intent.putExtra("Name", marker.title)
                 startActivity(intent)}
@@ -221,7 +226,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        textView3.text = "blah balh"
         if (toggle.onOptionsItemSelected(item)){
             return true
         }
@@ -242,4 +246,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         startActivity(intent)
         finish()
     }
+
 }

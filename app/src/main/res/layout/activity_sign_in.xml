@@ -6,111 +6,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="40dp"
+    android:background="@color/primary"
     tools:context=".SignInActivity">
+
 
     <ImageView
         android:id="@+id/welcome_imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
-
-    <Button
-        android:id="@+id/signInBtn"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="432dp"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
-        android:text="@string/sign_in_with_google"
-        android:src="@drawable/ic_search"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/viewAllProfilesBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View All Profiles"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signInBtn"
-        app:layout_constraintVertical_bias="0.05" />
-
-    <Button
-        android:id="@+id/mapsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Maps"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="160dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewAllProfilesBtn"
-        app:layout_constraintVertical_bias="0.073" />
-
-
-    <Button
-        android:id="@+id/listRestBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:text="List of Restaurants"
-     />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/food_icon" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/buttonFacebookLogin"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="110dp"
         android:text="Facebook Sign In"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/signInBtnEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="196dp"
+        android:layout_height="40dp"
         android:text="Sign In With Email"
+        android:layout_marginBottom="60dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonFacebookLogin"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.046" />
 
     <Button
         android:id="@+id/createAccountEmailBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_width="196dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
         android:text="Create Account"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInGoogleBtn"
         android:layout_width="200dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="156dp"
+        android:layout_marginBottom="155dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/go4LunchTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="Go4Lunch"
+        android:textColor="@color/white"
+        android:textSize="25pt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/go4LunchSubHeadingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:text="Find a nice restaurant and invite your co-worker for lunch!"
+        android:textSize="8pt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/go4LunchTV" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

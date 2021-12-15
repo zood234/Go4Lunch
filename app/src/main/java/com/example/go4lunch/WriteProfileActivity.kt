@@ -46,9 +46,7 @@ class WriteProfileActivity : AppCompatActivity() {
         val idTxt = findViewById<TextView>(R.id.id_txt)
         val nameTxt = findViewById<TextView>(R.id.name_txt)
         val emailTxt = findViewById<TextView>(R.id.email_txt)
-        val signOutBtn = findViewById<Button>(R.id.sign_out_btn)
         val profileImg = findViewById<ImageView>(R.id.profile_image)
-      //  val userProfilebtn = findViewById<Button>(R.id.userProfileBtn)
         val createProfieBtn = findViewById<Button>(R.id.createProfileBtn)
         val uploadImageBtn = findViewById<Button>(R.id.uploadImageBtn)
         idTxt.text = currentUser?.uid
@@ -71,12 +69,7 @@ class WriteProfileActivity : AppCompatActivity() {
                 startActivity(i)            }
         })
 
-        signOutBtn.setOnClickListener {
-            mAuth.signOut()
-            val intent = Intent(this, SignInActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+
 
 
 
