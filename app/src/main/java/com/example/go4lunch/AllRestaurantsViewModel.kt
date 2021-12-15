@@ -2,6 +2,7 @@ package com.example.go4lunch
 
 import android.app.Application
 import android.content.Intent
+import android.location.Location
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class AllRestaurantsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -28,8 +30,8 @@ var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
 
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.50979902325245,0.12624660554017764&radius=5000&type=restaurant&key=AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc
 
-    fun makeApiNearbyCall(latlng: String): List<AllItems> {
-
+    fun makeApiNearbyCall(lat: Double,lng:Double): List<AllItems> {
+    val latlng = lat.toString()+","+lng.toString()
         try {
             viewModelScope.launch(Dispatchers.IO) {
                 val retroInstance = RetroInstance.getInstance().create(NearByRestApi::class.java)
@@ -39,29 +41,23 @@ var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
                // makeApiPlaceDetails(response.results[3].place_id)
                 for (i in 0..response.results.size-1) {
 
-                    println("The response is " +response.results[i].name)
-                    println("Place Id is "+ response.results[i].place_id)
-
-                   // makeApiPlaceDetails(response.results[3].place_id)
-
                     makeApiPlaceDetails(response.results[i].place_id)
 
                     try {
                         viewModelScope.launch(Dispatchers.IO) {
                             val retroInstance = RetroInstance.getInstance().create(NearByRestApi::class.java)
                             var responsePlace = retroInstance.getPlaceDetails(response.results[i].place_id,"AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc")
-                        //  println("The response for place id " +responsePlace.result.name)
 
-                          //  println("The lat lng to check is "+ response.results[i].place_id)
-                              //      println(responsePlace)
                             var time = ""
                             if (responsePlace.result.opening_hours !=null ){
                                  time = responsePlace.result.opening_hours.weekday_text[getCurrentDay()]
                                println("The response for place time " + responsePlace.result.opening_hours.weekday_text[getCurrentDay()])
                             }
+                            var distance = getDistance(lat,lng,response.results[i].geometry.location.lat,response.results[i].geometry.location.lng)
+
                             var tempObjectOfResponse = AllItems(response.results[i].name,response.results[i].place_id,response.results[i].place_id,response.results[i].geometry.location.lng
                     ,response.results[i].geometry.location.lat,response.results[i].rating,response.results[i].vicinity,response.results[i].types[0],response.results[i].place_id
-                    , time,"1")
+                    , time,"1",distance)
 
                     allRest.add(tempObjectOfResponse)
                             liveDataRestaurants.postValue(true)
@@ -153,7 +149,26 @@ var currentDay = ""
     }
 
 
+    fun getDistance(latCurrentLocation:Double,lngCurrentLocation:Double,latRestaurantLocation:Double,lngRestaurantLocation:Double):String{
 
+
+
+        val startPoint = Location("locationA")
+        startPoint.setLatitude(latCurrentLocation)
+        startPoint.setLongitude(lngCurrentLocation)
+
+        val endPoint = Location("locationA")
+        endPoint.setLatitude(latRestaurantLocation)
+        endPoint.setLongitude(lngRestaurantLocation)
+
+        val distance: Float = startPoint.distanceTo(endPoint)
+
+       // var distanceWithNoDemials = distance.roundToInt().toString() + "m"
+
+        println("The distance is " + distance )
+
+        return  distance.roundToInt().toString() + "m"
+    }
 
 
 }

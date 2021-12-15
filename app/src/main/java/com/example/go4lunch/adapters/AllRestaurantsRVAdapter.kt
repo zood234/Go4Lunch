@@ -47,7 +47,7 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
             holder.titleTv.text = item.titleList
             holder.catTv.text = item.genreList
             holder.openingTimeTv.text = item.openingHours
-            holder.distanceTv.text = item.latList.toString() + " " + item.lngList.toString()
+            holder.distanceTv.text = item.distance
             holder.amountOfPeopleTv.text = item.amountOfPeopleGoing
             holder.reviewTv.text = item.ratingList.toString()
 

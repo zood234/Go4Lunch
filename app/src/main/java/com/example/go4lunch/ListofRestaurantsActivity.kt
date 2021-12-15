@@ -104,8 +104,8 @@ class ListofRestaurantsActivity : AppCompatActivity() {
                     if (addressList.size > 0) {
                         println(location.latitude + location.longitude)
 
-                        viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString())
-                        recyclerView(viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString()))
+                        viewModel.makeApiNearbyCall(location.latitude, location.longitude)
+                        recyclerView(viewModel.makeApiNearbyCall(location.latitude,location.longitude))
                     }
 
 

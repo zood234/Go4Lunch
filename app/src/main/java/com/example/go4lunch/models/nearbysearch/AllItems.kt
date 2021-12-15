@@ -12,4 +12,5 @@ data class AllItems (
     var idList : String,
     var openingHours : String,
     var amountOfPeopleGoing :String,
+    var distance : String
 )

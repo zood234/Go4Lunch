@@ -149,7 +149,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
                  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
 
-                viewModel.makeApiNearbyCall(location.latitude.toString() + "," + location.longitude.toString())
+                viewModel.makeApiNearbyCall(location.latitude,location.longitude)
 
                 val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
 
@@ -246,5 +246,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         startActivity(intent)
         finish()
     }
+
+
 
 }
