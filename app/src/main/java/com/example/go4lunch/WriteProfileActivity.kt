@@ -111,7 +111,7 @@ class WriteProfileActivity : AppCompatActivity() {
             imageUri = uri
         }
 
-        storageRefrence = FirebaseStorage.getInstance().getReference("users/" + uid)
+        storageRefrence = FirebaseStorage.getInstance().getReference("users/" + uid+ ".jpg")
         storageRefrence.putFile(imageUri).addOnSuccessListener {
             createProfieBtn.visibility = View.VISIBLE
 

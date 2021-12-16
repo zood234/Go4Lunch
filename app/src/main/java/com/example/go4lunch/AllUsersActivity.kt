@@ -65,11 +65,7 @@ class AllUsersActivity : AppCompatActivity() {
 
         }
 
-
-
     }
-
-    //inflates the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
 
@@ -113,22 +109,7 @@ class AllUsersActivity : AppCompatActivity() {
 
         }
 
-
-
-
-
-
-
-
         )
-
-
-
-
-
-
-
-
     }
 
     private fun addtoRecyclerview() {

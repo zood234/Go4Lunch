@@ -14,7 +14,7 @@
         android:padding="5dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageview"
+            android:id="@+id/userIV"
             android:layout_width="114dp"
             android:layout_height="83dp" />
         <LinearLayout

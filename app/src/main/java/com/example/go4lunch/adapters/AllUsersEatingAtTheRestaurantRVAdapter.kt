@@ -1,4 +1,4 @@
-package com.example.go4lunch
+package com.example.go4lunch.adapters
 
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -7,19 +7,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.go4lunch.R
+import com.example.go4lunch.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
 import java.io.File
 
-class AllUsersRVAdapter(private val mList: List<User>) : RecyclerView.Adapter<AllUsersRVAdapter.ViewHolder>() {
+class AllUsersEatingAtTheRestaurantRVAdapter(private val mList: List<User>) : RecyclerView.Adapter<AllUsersEatingAtTheRestaurantRVAdapter.ViewHolder>() {
     private lateinit var auth: FirebaseAuth
     private lateinit var storageReference: StorageReference
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_view_all_users_design, parent, false)
+            .inflate(R.layout.card_view_restaurant, parent, false)
 
         return ViewHolder(view)
     }
@@ -29,9 +31,7 @@ class AllUsersRVAdapter(private val mList: List<User>) : RecyclerView.Adapter<Al
         auth = FirebaseAuth.getInstance()
 
         val ItemsViewModel = mList[position]
-       holder.textViewActor.text = ItemsViewModel.displayName
-       holder.textViewCharacter.text = ItemsViewModel.email
-        holder.textViewHouse.text = ItemsViewModel.restrauntID
+       holder.userTV.text = ItemsViewModel.displayName
 
         storageReference = FirebaseStorage.getInstance().reference.child("users/" +ItemsViewModel.userId+".jpg")
         val localFile = File.createTempFile("tempImage", "jpg")
@@ -57,10 +57,8 @@ class AllUsersRVAdapter(private val mList: List<User>) : RecyclerView.Adapter<Al
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.userIV)
-        val textViewActor: TextView = itemView.findViewById(R.id.actorTV)
-        val textViewCharacter: TextView = itemView.findViewById(R.id.characterTV)
-        val textViewHouse: TextView = itemView.findViewById(R.id.houseTV)
+        val imageView: ImageView = itemView.findViewById(R.id.userEatingIV)
+        val userTV: TextView = itemView.findViewById(R.id.userEatingTV)
 
     }
 }

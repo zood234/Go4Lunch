@@ -59,7 +59,7 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
 
             holder.cardViewItem.setOnClickListener {
             val intent = Intent(mContext, RestaurantActivity::class.java)
-            intent.putExtra("Name", item.titleList)
+            intent.putExtra("Name", item.idList)
             mContext.startActivity(intent)
 
             }

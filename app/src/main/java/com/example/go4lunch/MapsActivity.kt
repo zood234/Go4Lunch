@@ -102,7 +102,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 for(i in 0..viewModel.allRest.size -1){
                     val currentLocation = LatLng(viewModel.allRest[i].latList, viewModel.allRest[i].lngList)
 
-                    mMap.addMarker(MarkerOptions().position(currentLocation).title(viewModel.allRest[i].titleList))
+                    mMap.addMarker(MarkerOptions().position(currentLocation).title(viewModel.allRest[i].idList))
 
                 }
 

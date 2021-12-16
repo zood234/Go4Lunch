@@ -45,9 +45,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listof_restaurants)
-//        val listRestBtn = findViewById<Button>(R.id.listRestBtn)
 
-//
       toggle = ActionBarDrawerToggle(this,drawerLayoutRest,R.string.open, R.string.close)
 //        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

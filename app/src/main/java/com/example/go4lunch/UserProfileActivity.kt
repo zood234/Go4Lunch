@@ -169,10 +169,7 @@ navView.setNavigationItemSelectedListener {
 
     private fun getUserProfilePicture() {
         val profileIv = findViewById<ImageView>(R.id.circleImageView)
-//tried gs://go4lunch-3b949.appspot.com/users/utpinVrTiYdwz6KWvKlm8o36ynq2
-        //gs://go4lunch-3b949.appspot.com/users/2GoJwIWoU4YVMFsRBE0MiHRAXk43
-        // did not work gs://go4lunch-3b949.appspot.com/users/1.jpg
-      storageReference = FirebaseStorage.getInstance().reference.child("users/" +uid) //  "users/" +uid)
+      storageReference = FirebaseStorage.getInstance().reference.child("users/" +uid+ ".jpg") //  "users/" +uid)
 
         val localFile = File.createTempFile("tempImage", "jpg")
         storageReference.getFile(localFile).addOnSuccessListener {
