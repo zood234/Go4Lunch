@@ -32,12 +32,12 @@ var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
 
     fun makeApiNearbyCall(lat: Double,lng:Double): List<AllItems> {
     val latlng = lat.toString()+","+lng.toString()
+        var pictureUrl = ""
         try {
             viewModelScope.launch(Dispatchers.IO) {
                 val retroInstance = RetroInstance.getInstance().create(NearByRestApi::class.java)
 
                 var response = retroInstance.getAllNearbyRest(latlng,"5000","restaurant","AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc")
-
                // makeApiPlaceDetails(response.results[3].place_id)
                 for (i in 0..response.results.size-1) {
 
@@ -53,9 +53,14 @@ var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
                                  time = responsePlace.result.opening_hours.weekday_text[getCurrentDay()]
                                println("The response for place time " + responsePlace.result.opening_hours.weekday_text[getCurrentDay()])
                             }
+
+                            if (responsePlace.result.photos!= null) {
+                                pictureUrl =  getPictureUrl(responsePlace.result.photos[0].photo_reference)
+                            }
+
                             var distance = getDistance(lat,lng,response.results[i].geometry.location.lat,response.results[i].geometry.location.lng)
 
-                            var tempObjectOfResponse = AllItems(response.results[i].name,response.results[i].place_id,response.results[i].place_id,response.results[i].geometry.location.lng
+                            var tempObjectOfResponse = AllItems(response.results[i].name,response.results[i].place_id,pictureUrl,response.results[i].geometry.location.lng
                     ,response.results[i].geometry.location.lat,response.results[i].rating,response.results[i].vicinity,response.results[i].types[0],response.results[i].place_id
                     , time,"1",distance)
 
@@ -168,6 +173,15 @@ var currentDay = ""
         println("The distance is " + distance )
 
         return  distance.roundToInt().toString() + "m"
+    }
+
+    fun getPictureUrl(pictureRef:String):String{
+
+        var imageUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+pictureRef+"&key="+"AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc"
+
+        println("The image is " + imageUrl)
+
+        return imageUrl
     }
 
 

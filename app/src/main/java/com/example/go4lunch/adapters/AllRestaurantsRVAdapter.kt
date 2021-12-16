@@ -2,6 +2,7 @@ package com.example.go4lunch.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Picture
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.go4lunch.R
 import com.example.go4lunch.activity.RestaurantActivity
 import com.example.go4lunch.models.nearbysearch.AllItems
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_view_all_resaurants_design.view.*
 
 class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>) :
@@ -50,6 +52,9 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
             holder.distanceTv.text = item.distance
             holder.amountOfPeopleTv.text = item.amountOfPeopleGoing
             holder.reviewTv.text = item.ratingList.toString()
+
+            val picasso = Picasso.get()
+            picasso.load(item.iamgerefList).into(holder.restIV)
 
 
             holder.cardViewItem.setOnClickListener {
