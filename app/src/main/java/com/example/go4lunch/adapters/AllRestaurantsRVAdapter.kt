@@ -82,4 +82,6 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
     }
 
 
+
+
 }

@@ -14,6 +14,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_user_profile.*
+import kotlinx.android.synthetic.main.nav_header.*
 import java.io.File
 
 class UserProfileActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var storageReference: StorageReference
     private lateinit var user:User
     private lateinit var  uid :String
+    var bitmap = BitmapFactory.decodeFile(R.drawable.collapse.toString())
 
 lateinit var toggle:ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +75,7 @@ navView.setNavigationItemSelectedListener {
 
 
 
+
         auth = FirebaseAuth.getInstance()
         uid = auth.currentUser?.uid.toString()
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
@@ -85,6 +88,9 @@ navView.setNavigationItemSelectedListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        nameSideBarTV.text = user.displayName
+        emailSideBarTV2.text = user.email
+        profilePicIV.setImageBitmap(bitmap)
         if (toggle.onOptionsItemSelected(item)){
             return true
         }
@@ -173,7 +179,7 @@ navView.setNavigationItemSelectedListener {
 
         val localFile = File.createTempFile("tempImage", "jpg")
         storageReference.getFile(localFile).addOnSuccessListener {
-          val bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+           bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
             profileIv.setImageBitmap(bitmap)
         }.addOnFailureListener{
             Toast.makeText(this,"Failed to retrieve image ", Toast.LENGTH_SHORT).show()

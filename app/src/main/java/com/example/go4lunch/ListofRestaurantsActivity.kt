@@ -45,9 +45,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listof_restaurants)
-
       toggle = ActionBarDrawerToggle(this,drawerLayoutRest,R.string.open, R.string.close)
-//        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
@@ -65,6 +63,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
             true
         }
 
+        viewModel.getUserData()
 
         getLocalRestaurants()
 
@@ -140,7 +139,10 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        textView3.text = "blah balh"
+        nameSideBarTV.text = viewModel.userName
+        emailSideBarTV2.text = viewModel.email
+        profilePicIV.setImageBitmap(viewModel.bitmap)
+
         if (toggle.onOptionsItemSelected(item)){
             return true
         }

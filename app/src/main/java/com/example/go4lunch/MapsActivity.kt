@@ -54,6 +54,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
+        viewModel.getUserData()
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -221,11 +223,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //inflates the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         menuInflater.inflate(R.menu.app_bar_menu, menu)
 
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        nameSideBarTV.text = viewModel.userName
+        emailSideBarTV2.text = viewModel.email
+        profilePicIV.setImageBitmap(viewModel.bitmap)
+
         if (toggle.onOptionsItemSelected(item)){
             return true
         }

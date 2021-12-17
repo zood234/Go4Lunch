@@ -1,19 +1,19 @@
 package com.example.go4lunch
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_all_users.*
-import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.nav_header.*
 
 class AllUsersActivity : AppCompatActivity() {
@@ -22,6 +22,7 @@ class AllUsersActivity : AppCompatActivity() {
     lateinit var alluserRV : RecyclerView
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var mAuth: FirebaseAuth
+    private lateinit var viewModel: AllRestaurantsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,8 @@ class AllUsersActivity : AppCompatActivity() {
         alluserRV.layoutManager = LinearLayoutManager(this)
         alluserRV.setHasFixedSize(true)
         allDataUsers = arrayListOf<User>()
+        viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
+
         toggle = ActionBarDrawerToggle(this,drawerLayoutAllUsers,R.string.open, R.string.close)
 //        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -48,6 +51,7 @@ class AllUsersActivity : AppCompatActivity() {
             true
         }
         getUserData()
+        viewModel.getUserData()
 
 
 
@@ -98,7 +102,7 @@ class AllUsersActivity : AppCompatActivity() {
                     }
                     alluserRV.adapter = AllUsersRVAdapter(allDataUsers)
 
-                    addtoRecyclerview()
+//                    addtoRecyclerview()
                 }
             }
 
@@ -112,17 +116,20 @@ class AllUsersActivity : AppCompatActivity() {
         )
     }
 
-    private fun addtoRecyclerview() {
-
-        println(allDataUsers[2])
-//        val recyclerview = findViewById<RecyclerView>(R.id.allUsersRV)
-//        val adapter = RVAdapter(allDataUsers)
-//        recyclerview.adapter = adapter
-    }
+//    private fun addtoRecyclerview() {
+//
+//        println(allDataUsers[2])
+////        val recyclerview = findViewById<RecyclerView>(R.id.allUsersRV)
+////        val adapter = RVAdapter(allDataUsers)
+////        recyclerview.adapter = adapter
+//    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        textView3.text = "blah balh"
+        nameSideBarTV.text = viewModel.userName
+        emailSideBarTV2.text = viewModel.email
+        profilePicIV.setImageBitmap(viewModel.bitmap)
+
         if (toggle.onOptionsItemSelected(item)){
             return true
         }

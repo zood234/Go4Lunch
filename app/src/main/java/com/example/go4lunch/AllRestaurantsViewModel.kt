@@ -2,7 +2,13 @@ package com.example.go4lunch
 
 import android.app.Application
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.location.Location
+import android.net.Uri
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.AndroidViewModel
@@ -15,10 +21,12 @@ import com.example.go4lunch.models.nearbysearch.RestaurantDetails
 import com.example.go4lunch.models.nearbysearch.Restaurants
 import com.example.harrypottercaracters.RetroInstance
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,9 +36,16 @@ class AllRestaurantsViewModel(application: Application) : AndroidViewModel(appli
 
     var allRest = arrayListOf<AllItems>()
     var restDetails = arrayListOf<RestaurantDetails>()
-
+    lateinit var mAuth: FirebaseAuth
+    lateinit var databaseRefrence : DatabaseReference
     var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
     var liveRestDetails: MutableLiveData<RestaurantDetails> = MutableLiveData()
+    private lateinit var  uid :String
+    private lateinit var user:User
+    var userName:String = ""
+    var email: String = ""
+    private lateinit var storageReference: StorageReference
+    var bitmap = BitmapFactory.decodeFile(R.drawable.collapse.toString())
 
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.50979902325245,0.12624660554017764&radius=5000&type=restaurant&key=AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc
 
@@ -195,10 +210,9 @@ var currentDay = ""
 
 
     fun saveDetails(restaurantGoingID:String, like:Boolean){
-         var mAuth: FirebaseAuth
-         var databaseRefrence : DatabaseReference
-        databaseRefrence = FirebaseDatabase.getInstance().getReference("Users")
-        mAuth = FirebaseAuth.getInstance()
+
+    databaseRefrence = FirebaseDatabase.getInstance().getReference("Users")
+    mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
         val user = User(currentUser?.uid,currentUser?.displayName,currentUser?.email,restaurantGoingID,like)
 
@@ -216,5 +230,39 @@ var currentDay = ""
         println("Create Profile")
     }
 
+     fun getUserData() {
+        databaseRefrence = FirebaseDatabase.getInstance().getReference("Users")
+        mAuth = FirebaseAuth.getInstance()
+        uid = mAuth.currentUser?.uid.toString()
 
+        databaseRefrence.child(uid).addValueEventListener(object  : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                user = snapshot.getValue(User::class.java)!!
+
+                userName = user.displayName.toString()
+                    email = user.email.toString()
+                getUserProfilePicture()
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
+    }
+
+     fun getUserProfilePicture(): Bitmap? {
+        storageReference = FirebaseStorage.getInstance().reference.child("users/" +uid+ ".jpg") //  "users/" +uid)
+
+         val localFile = File.createTempFile("tempImage", "jpg")
+        storageReference.getFile(localFile).addOnSuccessListener {
+             bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
+            //profileIv.setImageBitmap(bitmap)
+
+        }.addOnFailureListener{
+            Toast.makeText(getApplication(),"Failed to retrieve image ", Toast.LENGTH_SHORT).show()
+        }
+         return bitmap
+
+     }
 }
