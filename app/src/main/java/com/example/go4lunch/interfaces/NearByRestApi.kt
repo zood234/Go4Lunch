@@ -13,6 +13,7 @@ interface NearByRestApi {
 
     @GET("nearbysearch/json?")
     suspend fun getAllNearbyRest(
+        @Query("keyword") keyword: String?,
         @Query("location") loc: String?,
         @Query("radius") radius: String?,
         @Query("type") type: String?, @Query("key") key: String?

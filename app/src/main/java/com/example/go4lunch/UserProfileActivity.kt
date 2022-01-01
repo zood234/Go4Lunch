@@ -34,8 +34,6 @@ lateinit var toggle:ActionBarDrawerToggle
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
-
 
 
         userAllUsersBtn.setOnClickListener {
@@ -118,38 +116,6 @@ navView.setNavigationItemSelectedListener {
 
 
         }
-
-
-
-
-
-
-//        if (searchItem != null){
-//            val searchView = searchItem.actionView as SearchView
-//
-//            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-//                override fun onQueryTextSubmit(query: String?): Boolean {
-//                return true
-//                }
-//
-//                override fun onQueryTextChange(newText: String?): Boolean {
-//                    if (newText!!.isEmpty()){
-//
-//                    }else{
-//                        println("A Toast")
-//
-//                        ///////Put the search request hear and make it so its more than three characters
-//                    }
-//                    return true
-//                }
-//
-//            })
-//
-//
-//        }
-
-
-
 
         return true
 

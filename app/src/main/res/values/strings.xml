@@ -14,6 +14,13 @@
         <item> "pub"</item>
         <item> "american"</item>
         <item> "indian"</item>
+        <item> "spa"</item>
+        <item> "lodging"</item>
+        <item> "bar"</item>
+        <item> "cafe"</item>
+        <item>"night_club"</item>
+
+
     </string-array>
     <string name="facebook_app_id">220648780191456</string>
     <string name="fb_login_protocol_scheme">fb220648780191456</string>

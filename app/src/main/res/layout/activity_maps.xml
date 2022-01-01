@@ -19,13 +19,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapsActivity"
-    tools:layout="@layout/activity_maps" />
+    tools:layout="@layout/activity_maps" >
+
+
+
+</fragment>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         >
+<Button
+    android:id="@+id/centerbtn"
+    android:text="Center"
+    android:layout_width="75dp"
+    android:layout_height="75dp"
 
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="100dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
         <Button
             android:id="@+id/mapMapBtn"
             android:layout_width="130dp"

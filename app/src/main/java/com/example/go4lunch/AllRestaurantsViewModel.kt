@@ -49,14 +49,15 @@ class AllRestaurantsViewModel(application: Application) : AndroidViewModel(appli
 
 //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.50979902325245,0.12624660554017764&radius=5000&type=restaurant&key=AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc
 
-    fun makeApiNearbyCall(lat: Double,lng:Double): List<AllItems> {
+    fun makeApiNearbyCall(keyword: String, lat: Double,lng:Double): List<AllItems> {
+
     val latlng = lat.toString()+","+lng.toString()
         var pictureUrl = ""
         try {
             viewModelScope.launch(Dispatchers.IO) {
                 val retroInstance = RetroInstance.getInstance().create(NearByRestApi::class.java)
 
-                var response = retroInstance.getAllNearbyRest(latlng,"5000","restaurant","AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc")
+                var response = retroInstance.getAllNearbyRest(keyword,latlng,"5000","restaurant","AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc")
                 for (i in 0..response.results.size-1) {
 
                     makeApiPlaceDetails(response.results[i].place_id)

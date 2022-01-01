@@ -19,6 +19,8 @@ import com.example.go4lunch.User
 import com.example.harrypottercaracters.RetroInstance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_restaurant.*
 import kotlinx.coroutines.Dispatchers
@@ -98,6 +100,8 @@ callBtn.setOnClickListener {
 
         likeBtn.setOnClickListener {
             if (like== true){
+                Firebase.messaging.subscribeToTopic("weather")
+
                 like = false
                 likeBtn.setBackgroundColor(
                     Color.parseColor("#FF5722"))

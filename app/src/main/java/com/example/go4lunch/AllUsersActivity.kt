@@ -97,12 +97,8 @@ class AllUsersActivity : AppCompatActivity() {
                     for(userSnapshot in snapshot.children){
                         val user = userSnapshot.getValue(User::class.java)
                         allDataUsers.add(user!!)
-                     //   println("The third user is " + allDataUsers)
-
                     }
                     alluserRV.adapter = AllUsersRVAdapter(allDataUsers)
-
-//                    addtoRecyclerview()
                 }
             }
 

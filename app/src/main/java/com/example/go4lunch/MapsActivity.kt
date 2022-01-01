@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
@@ -46,6 +48,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private  lateinit var  locationManager: LocationManager
     private lateinit var  locationListener: LocationListener
     private lateinit var viewModel: AllRestaurantsViewModel
+    private  var longitude:Double = 0.0
+    private  var latitude:Double = 0.0
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +60,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
         viewModel.getUserData()
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -90,11 +93,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
 
         }
+        centerbtn.setOnClickListener {
 
-
-
-
-
+            val currentLocation = LatLng(latitude, longitude)
+            mMap.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
+        }
 
 
         viewModel.liveDataRestaurants.observe(this, androidx.lifecycle.Observer{
@@ -150,8 +154,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val currentLocation = LatLng(location.latitude, location.longitude)
                 mMap.addMarker(MarkerOptions().position(currentLocation).title("You are here"))
                  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15f))
-
-                viewModel.makeApiNearbyCall(location.latitude,location.longitude)
+                longitude=location.longitude
+                latitude=location.latitude
+                viewModel.makeApiNearbyCall("",location.latitude,location.longitude)
 
                 val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
 
@@ -223,10 +228,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //inflates the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
         menuInflater.inflate(R.menu.app_bar_menu, menu)
+        //val searchItem = menu?.findItem(R.id.search_box)
+        val searchItem2 = menu?.findItem(R.id.auto_search_box)
+
+
+        val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
+
+        if (searchItem2 != null) {
+            val searchView2 = searchItem2.actionView as AutoCompleteTextView
+            searchView2.width = 500
+            ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,typesOfFood).also {
+                    adapter -> searchView2.setAdapter(adapter)
+                searchView2.setOnItemClickListener { parent, view, position, id -> mapWithSearch(searchView2.text.toString())}/// Put the function for retro fit here
+            }
+
+
+
+
+        }
 
         return true
+
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -255,6 +278,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         finish()
     }
 
+    fun mapWithSearch(search:String){
+        mMap.clear()
+        viewModel.liveDataRestaurants.equals(false)
+        viewModel.makeApiNearbyCall(search,latitude,longitude)
+
+
+        for(i in 0..viewModel.allRest.size -1){
+            val currentLocation = LatLng(viewModel.allRest[i].latList, viewModel.allRest[i].lngList)
+
+            mMap.addMarker(MarkerOptions().position(currentLocation).title(viewModel.allRest[i].idList))
+
+        }
+
+    }
 
 
 }

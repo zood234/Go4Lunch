@@ -1,5 +1,6 @@
 package com.example.go4lunch.adapters
 
+import android.R.attr
 import android.content.Context
 import android.content.Intent
 import android.graphics.Picture
@@ -12,6 +13,14 @@ import com.example.go4lunch.activity.RestaurantActivity
 import com.example.go4lunch.models.nearbysearch.AllItems
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_view_all_resaurants_design.view.*
+import android.R.attr.data
+import android.R.attr.data
+
+
+
+
+
+
 
 class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>) :
     RecyclerView.Adapter<AllRestaurantsRVAdapter.ViewHolder>() {
@@ -32,16 +41,14 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
         return allRest.size
     }
 
-//    fun deleteItems() {
-//        title.removeAll(title)
-//        publishedDate.removeAll(publishedDate)
-//        cat.removeAll(cat)
-//        url.removeAll(url)
-//        picture.removeAll(picture)
-//    }
+    fun deleteItems() {
+
+    }
+
+
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
 
         val item = allRest.get(position)
 
@@ -81,7 +88,10 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
         val cardViewItem = view.cardViewItem
     }
 
+fun clear(){
 
+    notifyDataSetChanged()
+}
 
 
 }

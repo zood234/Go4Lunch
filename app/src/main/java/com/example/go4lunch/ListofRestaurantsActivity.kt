@@ -3,6 +3,7 @@ package com.example.go4lunch
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
@@ -65,7 +68,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
 
         viewModel.getUserData()
 
-        getLocalRestaurants()
+        getLocalRestaurants("")
 
 
         allRestAllUsersBtn.setOnClickListener {
@@ -88,7 +91,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
         val intent = Intent(this, UserProfileActivity::class.java)
         startActivity(intent)
     }
-    fun getLocalRestaurants(){
+    fun getLocalRestaurants(search:String){
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
 
@@ -101,8 +104,9 @@ class ListofRestaurantsActivity : AppCompatActivity() {
                     if (addressList.size > 0) {
                         println(location.latitude + location.longitude)
 
-                        viewModel.makeApiNearbyCall(location.latitude, location.longitude)
-                        recyclerView(viewModel.makeApiNearbyCall(location.latitude,location.longitude))
+                        viewModel.makeApiNearbyCall(search,location.latitude, location.longitude)
+                        recyclerView(viewModel.makeApiNearbyCall("",location.latitude,location.longitude))
+
                     }
 
 
@@ -152,8 +156,28 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     //inflates the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
+        //val searchItem = menu?.findItem(R.id.search_box)
+        val searchItem2 = menu?.findItem(R.id.auto_search_box)
+
+
+        val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
+
+        if (searchItem2 != null) {
+            val searchView2 = searchItem2.actionView as AutoCompleteTextView
+            searchView2.width = 500
+
+            ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,typesOfFood).also {
+                    adapter -> searchView2.setAdapter(adapter)
+                searchView2.setOnItemClickListener { parent, view, position, id ->getLocalRestaurants(searchView2.text.toString())}
+            }
+
+
+
+
+        }
 
         return true
+
     }
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -173,13 +197,13 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     fun recyclerView(allRest: List<AllItems>)
     {
         lateinit var alluserRV : RecyclerView
-        alluserRV= findViewById<RecyclerView>(R.id.allResaurantsRV)
-        alluserRV.layoutManager = LinearLayoutManager(this)
-        alluserRV.setHasFixedSize(true)
+
+allResaurantsRV.setAdapter(null)
         // Adapter class is initialized and list is passed in the param.
         val itemAdapter = AllRestaurantsRVAdapter(this, allRest, )
         allResaurantsRV.layoutManager = LinearLayoutManager(this)
         allResaurantsRV.adapter = itemAdapter
+
         itemAdapter.notifyDataSetChanged()
     }
 
