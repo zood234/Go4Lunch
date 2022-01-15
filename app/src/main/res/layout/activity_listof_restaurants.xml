@@ -8,12 +8,13 @@
     tools:context=".ListofRestaurantsActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/allResaurantsRV"
-            android:layout_width="409dp"
-            android:layout_height="729dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toTopOf="@+id/allRestListBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +24,8 @@
             android:id="@+id/allRestMapBtn"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:text="Map View"
-            android:textSize="10sp"
+            android:text="@string/map_view"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,8 +35,8 @@
             android:id="@+id/allRestListBtn"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:text="List View"
-            android:textSize="10sp"
+            android:text="@string/list_view"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,8 +47,8 @@
             android:id="@+id/allRestAllUsersBtn"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:text="Workmates"
-            android:textSize="10sp"
+            android:text="@string/workmates"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"

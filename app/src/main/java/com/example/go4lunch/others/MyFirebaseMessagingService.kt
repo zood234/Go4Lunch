@@ -143,14 +143,15 @@ fun checkIfAnyUserHasSameReastrauntID(currentUserID: String, allDataUsers: Array
             if (restaurantID == allDataUsers[i].restrauntID && restaurantID != ""){
                 println(restaurantID + " and then compare it to" + allDataUsers[i].restrauntID )
                 amountOfPeopleGoing++
-
-
             }
         }
 
         var  description = "Dont forget to go to the reastraunt. There will be "+ amountOfPeopleGoing.toString() + " going."
 
-        makeApiPlaceDetails(restaurantID,description)
+
+    if (restaurantID != "") {
+        makeApiPlaceDetails(restaurantID, description)
+    }
 }
 
 

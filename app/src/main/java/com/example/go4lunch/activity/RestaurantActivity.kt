@@ -31,6 +31,7 @@ class RestaurantActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     lateinit var allDataUsers : ArrayList<User>
     lateinit var alluserRV : RecyclerView
+    var colorChanger = false
     private lateinit var viewModel: AllRestaurantsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class RestaurantActivity : AppCompatActivity() {
         allDataUsers = arrayListOf<User>()
         var phone = ""
         var website = ""
+        var name =""
         val intent = intent
         val id = intent.getStringExtra("Name")
         var like = false
@@ -58,7 +60,8 @@ class RestaurantActivity : AppCompatActivity() {
         }
 
         viewModel.liveRestDetails.observe(this, androidx.lifecycle.Observer{
-            titleRestaurantTV.text=it.name
+            name = it.name
+            titleRestaurantTV.text=name
             catAndAddressTV.text =it.type + " - " + it.address
             var picture = viewModel.getPictureUrl(it.pictureUrl)
 
@@ -92,34 +95,24 @@ callBtn.setOnClickListener {
 
         goingBtn.setOnClickListener {
             if (id != null) {
-                viewModel.saveDetails(id,like)
+                viewModel.saveDetails(id,like,name)
             }
 
         }
 
 
         likeBtn.setOnClickListener {
-            if (like== true){
-                Firebase.messaging.subscribeToTopic("weather")
-
-                like = false
+            if (colorChanger== false){
                 likeBtn.setBackgroundColor(
                     Color.parseColor("#FF5722"))
-
-                if (id != null) {
-                    viewModel.saveDetails(id,like)
-                }
+                colorChanger = true
             }
 
-            else if (like == false){
-
-                like = true
+            else {
                 likeBtn.setBackgroundColor(
                     Color.parseColor("#FF6200EE"))
+                like = false
 
-                if (id != null) {
-                    viewModel.saveDetails(id,like)
-                }
             }
 
 

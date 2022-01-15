@@ -33,7 +33,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Title of Restauarant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="3.4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +53,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="16dp"
-                android:text="Cat And Address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleRestaurantTV" />
 
@@ -81,7 +78,7 @@
                 android:id="@+id/callBtn"
                 android:layout_width="138dp"
                 android:layout_height="match_parent"
-                android:text="Call"
+                android:text="@string/call"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/websiteBtn"
                 app:layout_constraintStart_toEndOf="@+id/likeBtn"
@@ -91,7 +88,7 @@
                 android:id="@+id/likeBtn"
                 android:layout_width="138dp"
                 android:layout_height="match_parent"
-                android:text="Like"
+                android:text="@string/like"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -100,7 +97,7 @@
                 android:id="@+id/websiteBtn"
                 android:layout_width="138dp"
                 android:layout_height="match_parent"
-                android:text="Website"
+                android:text="@string/website"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -116,11 +113,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restaurantButtonsCardView" />
 
-    <Button
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/goingBtn"
-        android:layout_width="104dp"
-        android:layout_height="76dp"
-        android:text="Going"
+        android:layout_width="89dp"
+        android:layout_height="89dp"
+        android:src="@drawable/going_icon"
         app:layout_constraintBottom_toTopOf="@+id/restaurantDetailsCardView"
         app:layout_constraintEnd_toEndOf="parent" />
 

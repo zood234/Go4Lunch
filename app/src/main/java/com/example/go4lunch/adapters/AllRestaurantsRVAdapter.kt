@@ -57,12 +57,18 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
             holder.catTv.text = item.genreList
             holder.openingTimeTv.text = item.openingHours
             holder.distanceTv.text = item.distance
-            holder.amountOfPeopleTv.text = item.amountOfPeopleGoing
-            holder.reviewTv.text = item.ratingList.toString()
+            holder.reviewTv.text = item.ratingList.toString()+"/5"
 
             val picasso = Picasso.get()
             picasso.load(item.iamgerefList).into(holder.restIV)
 
+//            if (item.amountOfPeopleGoing == "0" ){
+//                holder.amountOfPeopleTv.text = "No one is going here be the first"
+//            }
+//
+//            else{
+//                holder.amountOfPeopleTv.text = "The amount of people going here are " + item.amountOfPeopleGoing.toString()
+//            }
 
             holder.cardViewItem.setOnClickListener {
             val intent = Intent(mContext, RestaurantActivity::class.java)
@@ -87,11 +93,6 @@ class AllRestaurantsRVAdapter( val context: Context, var allRest: List<AllItems>
         val reviewTv = view.reviewTV
         val cardViewItem = view.cardViewItem
     }
-
-fun clear(){
-
-    notifyDataSetChanged()
-}
 
 
 }

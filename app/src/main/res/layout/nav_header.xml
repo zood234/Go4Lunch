@@ -12,25 +12,28 @@
         android:id="@+id/emailSideBarTV2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="@string/email"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.318"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.648" />
+
+
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/nameSideBarTV"
+        app:layout_constraintTop_toBottomOf="@+id/nameSideBarTV"
+        app:layout_constraintVertical_bias="0.287" />
 
     <TextView
         android:id="@+id/nameSideBarTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.318"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toEndOf="@+id/profilePicIV"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.458" />
+        app:layout_constraintVertical_bias="0.351" />
 
     <ImageView
         android:id="@+id/profilePicIV"

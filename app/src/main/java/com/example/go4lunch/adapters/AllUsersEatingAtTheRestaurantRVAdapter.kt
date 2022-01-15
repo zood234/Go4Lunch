@@ -43,8 +43,6 @@ class AllUsersEatingAtTheRestaurantRVAdapter(private val mList: List<User>) : Re
 
         }
 
-        //////////////////////////////////////////////////////////////////
-
 
 
     }

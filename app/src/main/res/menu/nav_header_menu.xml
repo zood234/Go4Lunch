@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/mYourLunch"
-        android:title="YOUR LUNCH"
+        android:title="@string/your_lunch"
 
         />
 
     <item
         android:id="@+id/mSettings"
-        android:title="SETTINGS"
+        android:title="@string/settings"
 
         />
 
     <item
         android:id="@+id/mLogout"
-        android:title="LOGOUT"
+        android:title="@string/logout"
 
         />
 </menu>

@@ -65,7 +65,7 @@ class WriteProfileActivity : AppCompatActivity() {
         doesTheUserExist.observe(this, androidx.lifecycle.Observer{
 
             if (it == true) {
-                val i = Intent(this, UserProfileActivity::class.java)
+                val i = Intent(this, MapsActivity::class.java)
                 startActivity(i)            }
         })
 

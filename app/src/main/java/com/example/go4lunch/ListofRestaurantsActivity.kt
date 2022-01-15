@@ -156,7 +156,6 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     //inflates the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
-        //val searchItem = menu?.findItem(R.id.search_box)
         val searchItem2 = menu?.findItem(R.id.auto_search_box)
 
 

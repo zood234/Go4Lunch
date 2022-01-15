@@ -4,7 +4,7 @@
     <string name="example">Example</string>
     <string name="id">ID</string>
     <string name="name">Name</string>
-    <string name="email_address">Email address</string>
+    <string name="email_address">Email Address</string>
     <string name="sign_out">Sign out</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="open">Open</string>
@@ -22,7 +22,31 @@
 
 
     </string-array>
-    <string name="facebook_app_id">220648780191456</string>
+    <string name="facebook_app_id" translatable="false">220648780191456</string>
     <string name="fb_login_protocol_scheme">fb220648780191456</string>
+    <string name="map_view">Map View</string>
+    <string name="workmates">Workmates</string>
+    <string name="list_view">List View</string>
+    <string name="map_views">Map Views</string>
+    <string name="call">Call</string>
+    <string name="like">Like</string>
+    <string name="website">Website</string>
+    <string name="sign_in_with_email">Sign In With Email</string>
+    <string name="go4lunch">Go4Lunch</string>
+    <string name="find_a_nice_restaurant_and_invite_your_co_worker_for_lunch">Find a nice restaurant and invite your co-worker for lunch!</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+
+    <string name="upload_profile_image">Upload Profile Image</string>
+    <string name="create_profile">Create Profile</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_password_agin">Enter your password agin</string>
+    <string name="title">Title</string>
+    <string name="descrption">Descrption</string>
+    <string name="enter_your_emails">Enter your email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="your_lunch">YOUR LUNCH</string>
+    <string name="settings">SETTINGS</string>
+    <string name="logout">LOGOUT</string>
 
 </resources>

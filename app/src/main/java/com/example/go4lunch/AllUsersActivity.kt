@@ -96,6 +96,15 @@ class AllUsersActivity : AppCompatActivity() {
                 if (snapshot.exists()){
                     for(userSnapshot in snapshot.children){
                         val user = userSnapshot.getValue(User::class.java)
+                        if (user != null) {
+                            if (user.restrauntID == ""){
+                                user.displayName = user.displayName + " has not decided yet."
+                            }
+                            else{
+                                user.displayName = user.displayName + " is going to "+ user.restrauntName
+
+                            }
+                        }
                         allDataUsers.add(user!!)
                     }
                     alluserRV.adapter = AllUsersRVAdapter(allDataUsers)

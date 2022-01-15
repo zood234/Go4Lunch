@@ -26,7 +26,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/notificationLogoIV"
-            android:text="Title"
+            android:text="@string/title"
             android:textSize="15sp" />
 
         <TextView
@@ -37,8 +37,8 @@
             android:layout_toRightOf="@+id/notificationLogoIV"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Descrption"
-            android:textSize="10sp" />
+            android:text="@string/descrption"
+            android:textSize="12sp" />
     </RelativeLayout>
 
 

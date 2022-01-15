@@ -30,8 +30,8 @@ class AllUsersRVAdapter(private val mList: List<User>) : RecyclerView.Adapter<Al
 
         val ItemsViewModel = mList[position]
        holder.textViewActor.text = ItemsViewModel.displayName
-       holder.textViewCharacter.text = ItemsViewModel.email
-        holder.textViewHouse.text = ItemsViewModel.restrauntID
+       holder.textViewCharacter.text = ""
+        holder.textViewHouse.text = ""
 
         storageReference = FirebaseStorage.getInstance().reference.child("users/" +ItemsViewModel.userId+".jpg")
         val localFile = File.createTempFile("tempImage", "jpg")
@@ -43,7 +43,6 @@ class AllUsersRVAdapter(private val mList: List<User>) : RecyclerView.Adapter<Al
 
         }
 
-        //////////////////////////////////////////////////////////////////
 
 
 

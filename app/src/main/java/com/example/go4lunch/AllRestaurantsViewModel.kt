@@ -79,9 +79,12 @@ class AllRestaurantsViewModel(application: Application) : AndroidViewModel(appli
 
                             var distance = getDistance(lat,lng,response.results[i].geometry.location.lat,response.results[i].geometry.location.lng)
 
+
+
+
                             var tempObjectOfResponse = AllItems(response.results[i].name,response.results[i].place_id,pictureUrl,response.results[i].geometry.location.lng
                     ,response.results[i].geometry.location.lat,response.results[i].rating,response.results[i].vicinity,response.results[i].types[0],response.results[i].place_id
-                    , time,"1",distance)
+                    , time,"0",distance)
 
                     allRest.add(tempObjectOfResponse)
                             liveDataRestaurants.postValue(true)
@@ -102,16 +105,18 @@ class AllRestaurantsViewModel(application: Application) : AndroidViewModel(appli
     }
 
 
-    fun makeApiPlaceDetails(placeID: String) {
+    fun makeApiPlaceDetails(placeID: String?):String? {
         var pictureUrl = ""
         var website = ""
         var phone = ""
+        var name = ""
         try {
 
             viewModelScope.launch(Dispatchers.IO) {
                 val retroInstance = RetroInstance.getInstance().create(NearByRestApi::class.java)
                 var response = retroInstance.getPlaceDetails(placeID,"AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc")
                 println("The name in the response is " + response.result.name )
+                name = response.result.name
 
                 if (response.result.photos!= null) {
                     pictureUrl =  getPictureUrl(response.result.photos[0].photo_reference)
@@ -137,6 +142,7 @@ class AllRestaurantsViewModel(application: Application) : AndroidViewModel(appli
             e.printStackTrace()
 
         }
+        return name
 
 
     }
@@ -210,12 +216,12 @@ var currentDay = ""
     }
 
 
-    fun saveDetails(restaurantGoingID:String, like:Boolean){
+    fun saveDetails(restaurantGoingID:String, like:Boolean, restaurantName:String){
 
     databaseRefrence = FirebaseDatabase.getInstance().getReference("Users")
     mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
-        val user = User(currentUser?.uid,currentUser?.displayName,currentUser?.email,restaurantGoingID,like)
+        val user = User(currentUser?.uid,currentUser?.displayName,currentUser?.email,restaurantGoingID,like,restaurantName)
 
         currentUser?.uid?.let {
             databaseRefrence.child(it).setValue(user).addOnCompleteListener{
