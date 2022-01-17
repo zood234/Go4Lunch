@@ -7,24 +7,16 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.go4lunch.AllRestaurantsViewModel
+import com.example.go4lunch.others.AllRestaurantsViewModel
 import com.example.go4lunch.R
-import com.example.go4lunch.interfaces.NearByRestApi
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.go4lunch.AllUsersRVAdapter
-import com.example.go4lunch.User
+import com.example.go4lunch.adapters.AllUsersRVAdapter
+import com.example.go4lunch.models.nearbysearch.User
 
-import com.example.harrypottercaracters.RetroInstance
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_restaurant.*
-import kotlinx.coroutines.Dispatchers
-import java.io.IOException
 
 class RestaurantActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.go4lunch
+package com.example.go4lunch.adapters
 
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.go4lunch.R
+import com.example.go4lunch.models.nearbysearch.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference

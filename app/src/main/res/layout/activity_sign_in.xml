@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="40dp"
     android:background="@color/primary"
-    tools:context=".SignInActivity">
+    tools:context=".activity.SignInActivity">
 
 
     <ImageView

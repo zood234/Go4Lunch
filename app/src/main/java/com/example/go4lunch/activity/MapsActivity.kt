@@ -1,4 +1,4 @@
-package com.example.go4lunch
+package com.example.go4lunch.activity
 
 import android.content.Context
 import android.content.Intent
@@ -18,7 +18,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.go4lunch.activity.RestaurantActivity
+import com.example.go4lunch.*
+import com.example.go4lunch.adapters.AllUsersActivity
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.go4lunch.databinding.ActivityMapsBinding
+import com.example.go4lunch.others.AllRestaurantsViewModel
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
@@ -35,10 +37,6 @@ import kotlinx.android.synthetic.main.activity_listof_restaurants.*
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.nav_header.*
-import com.google.android.gms.maps.model.Marker
-
-
-
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -64,7 +62,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        toggle = ActionBarDrawerToggle(this,drawerLayoutMaps,R.string.open, R.string.close)
+        toggle = ActionBarDrawerToggle(this,drawerLayoutMaps, R.string.open, R.string.close)
 //        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

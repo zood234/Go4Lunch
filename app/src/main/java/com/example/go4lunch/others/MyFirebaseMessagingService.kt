@@ -4,15 +4,14 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.*
-import com.example.go4lunch.*
 import com.example.go4lunch.R
+import com.example.go4lunch.activity.MainActivity
 import com.example.go4lunch.interfaces.NearByRestApi
+import com.example.go4lunch.models.nearbysearch.User
 import com.example.harrypottercaracters.RetroInstance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -37,7 +36,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     }
 fun generateNotification(title:String, description: String ){
-    val intent = Intent(this,MainActivity::class.java)
+    val intent = Intent(this, MainActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
     val pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT)

@@ -1,4 +1,4 @@
-package com.example.go4lunch
+package com.example.go4lunch.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -11,13 +11,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.example.go4lunch.R
+import com.example.go4lunch.models.nearbysearch.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_write_profile.*
-import kotlinx.coroutines.*
 
 class WriteProfileActivity : AppCompatActivity() {
     var doesTheUserExist: MutableLiveData<Boolean> = MutableLiveData()
@@ -38,11 +39,6 @@ class WriteProfileActivity : AppCompatActivity() {
 
         val user = User(currentUser?.uid,currentUser?.displayName,currentUser?.email,"",false)
 
-      //  addUsersMockData()
-        //Working but need to make so the user uploads the profile
-
-
-
         val idTxt = findViewById<TextView>(R.id.id_txt)
         val nameTxt = findViewById<TextView>(R.id.name_txt)
         val emailTxt = findViewById<TextView>(R.id.email_txt)
@@ -57,8 +53,6 @@ class WriteProfileActivity : AppCompatActivity() {
         picasso.load(currentUser?.photoUrl).into(profileImg)
         println("IMAGE IS " + profileImg)
 
-
-            //checkIfUserExists(currentUser?.uid)
         getUserData(currentUser?.uid)
 
 

@@ -1,14 +1,16 @@
-package com.example.go4lunch
+package com.example.go4lunch.activity
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
+import com.example.go4lunch.R
+import com.example.go4lunch.adapters.AllUsersActivity
+import com.example.go4lunch.models.nearbysearch.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -21,7 +23,7 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
-    private lateinit var user:User
+    private lateinit var user: User
     private lateinit var  uid :String
     var bitmap = BitmapFactory.decodeFile(R.drawable.collapse.toString())
 
@@ -30,7 +32,7 @@ lateinit var toggle:ActionBarDrawerToggle
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
 
-        toggle = ActionBarDrawerToggle(this,drawerLayout,R.string.open, R.string.close)
+        toggle = ActionBarDrawerToggle(this,drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -68,8 +70,6 @@ navView.setNavigationItemSelectedListener {
     }
     true
 }
-
-
 
 
 

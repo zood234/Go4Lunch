@@ -1,24 +1,18 @@
-package com.example.go4lunch
+package com.example.go4lunch.others
 
 import android.app.Application
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.location.Location
-import android.net.Uri
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.go4lunch.R
+import com.example.go4lunch.models.nearbysearch.User
 import com.example.go4lunch.interfaces.NearByRestApi
 import com.example.go4lunch.models.nearbysearch.AllItems
 import com.example.go4lunch.models.nearbysearch.RestaurantDetails
-import com.example.go4lunch.models.nearbysearch.Restaurants
 import com.example.harrypottercaracters.RetroInstance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -41,7 +35,7 @@ class AllRestaurantsViewModel(application: Application) : AndroidViewModel(appli
     var liveDataRestaurants: MutableLiveData<Boolean> = MutableLiveData()
     var liveRestDetails: MutableLiveData<RestaurantDetails> = MutableLiveData()
     private lateinit var  uid :String
-    private lateinit var user:User
+    private lateinit var user: User
     var userName:String = ""
     var email: String = ""
     private lateinit var storageReference: StorageReference

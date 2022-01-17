@@ -1,9 +1,8 @@
-package com.example.go4lunch
+package com.example.go4lunch.activity
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
@@ -21,8 +20,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.go4lunch.R
+import com.example.go4lunch.adapters.AllUsersActivity
 import com.example.go4lunch.adapters.AllRestaurantsRVAdapter
 import com.example.go4lunch.models.nearbysearch.AllItems
+import com.example.go4lunch.others.AllRestaurantsViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_listof_restaurants.*
@@ -35,10 +37,6 @@ import java.util.*
 
 
 
-
-// Working uses this to get the restraunts for a specific lat and long   https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.50979902325245,0.12624660554017764&radius=5000&type=restaurant&key=AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc
-//Working uses this for search https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=51.50979902325245,%20-0.12624660554017764&radius=5000&type=restaurant&key=AIzaSyBE5fuDypxo9mLKBderC-7GTMmnF57ghbc
-//Working use this to get a specific image https://lh3.googleusercontent.com/places/AAcXr8oleYdQX1u9pF9r8Da9PCU40jZiYbiMKjSHCHwSHnIsnAteYRY81vLVAATKpIyUDqtZKo_QHROaEfOSr90QKnvWEetEsQRBW0Q=s1600-w400
 class ListofRestaurantsActivity : AppCompatActivity() {
     private  lateinit var  locationManager: LocationManager
     private lateinit var  locationListener: LocationListener
@@ -48,7 +46,7 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listof_restaurants)
-      toggle = ActionBarDrawerToggle(this,drawerLayoutRest,R.string.open, R.string.close)
+      toggle = ActionBarDrawerToggle(this,drawerLayoutRest, R.string.open, R.string.close)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
@@ -157,7 +155,6 @@ class ListofRestaurantsActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
         val searchItem2 = menu?.findItem(R.id.auto_search_box)
-
 
         val typesOfFood: Array<out String> = resources.getStringArray(R.array.food_type)
 

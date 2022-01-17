@@ -1,12 +1,11 @@
-package com.example.go4lunch
+package com.example.go4lunch.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.example.go4lunch.models.nearbysearch.AllItems
+import com.example.go4lunch.R
 import com.google.firebase.auth.FirebaseAuth
-import java.util.ArrayList
 
 
 class MainActivity : AppCompatActivity() {

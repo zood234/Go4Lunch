@@ -1,11 +1,10 @@
-package com.example.go4lunch
+package com.example.go4lunch.activity
 
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,6 +17,7 @@ import android.util.Base64
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.go4lunch.R
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -59,9 +59,7 @@ class SignInActivity : AppCompatActivity() {
             with(builder) {
                 setTitle("Create Your Account")
                 setPositiveButton("Submit") { _, _ ->
-//                    if(editText.text.toString().length >3) {
-//                        Days.currentDay[2] = editText.text.toString()
-//                    }
+
                     println(emailET.text.toString())
                     println(passwordET.text.toString())
                     println(passwordCheckerET.text.toString())
@@ -81,28 +79,6 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this, ListofRestaurantsActivity::class.java)
             startActivity(intent)
 
-            //Working just needed button
-//            val builder = AlertDialog.Builder(this)
-//            val inflater = layoutInflater
-//            val dialogLayout = inflater.inflate(R.layout.sign_in_email_layout, null)
-//            val emailET = dialogLayout.findViewById<EditText>(R.id.emailSignInET)
-//            val passwordET = dialogLayout.findViewById<EditText>(R.id.passwordSignInET)
-//
-//            with(builder) {
-//                setTitle("Create Your Account")
-//                setPositiveButton("Submit") { _, _ ->
-//                    println(emailET.text.toString())
-//                    println(passwordET.text.toString())
-//                    signInEmail(emailET.text.toString(),passwordET.text.toString())
-//
-//
-//                }
-//                setNegativeButton("Cancel") { _, _ ->
-//                    Log.d("main", "Negative Button Clicked")
-//                }
-//                setView(dialogLayout)
-//                show()
-//            }
         }
 
 

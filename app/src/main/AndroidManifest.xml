@@ -43,7 +43,7 @@
             android:name=".activity.RestaurantActivity"
             android:exported="false" />
         <activity
-            android:name=".ListofRestaurantsActivity"
+            android:name=".activity.ListofRestaurantsActivity"
             android:exported="false" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -75,22 +75,22 @@
         </activity>
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activity.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".MapActivity"
             android:exported="false" />
         <activity
-            android:name=".AllUsersActivity"
+            android:name=".adapters.AllUsersActivity"
             android:exported="false" />
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".activity.UserProfileActivity"
             android:exported="false" />
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".WriteProfileActivity" />
+        <activity android:name=".activity.SignInActivity" />
+        <activity android:name=".activity.WriteProfileActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

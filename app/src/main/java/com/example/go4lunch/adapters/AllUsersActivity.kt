@@ -1,7 +1,6 @@
-package com.example.go4lunch
+package com.example.go4lunch.adapters
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -11,6 +10,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.go4lunch.R
+import com.example.go4lunch.activity.ListofRestaurantsActivity
+import com.example.go4lunch.activity.MapsActivity
+import com.example.go4lunch.activity.SignInActivity
+import com.example.go4lunch.activity.UserProfileActivity
+import com.example.go4lunch.models.nearbysearch.User
+import com.example.go4lunch.others.AllRestaurantsViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_all_users.*
@@ -36,7 +42,7 @@ class AllUsersActivity : AppCompatActivity() {
         allDataUsers = arrayListOf<User>()
         viewModel = ViewModelProvider(this).get(AllRestaurantsViewModel::class.java)
 
-        toggle = ActionBarDrawerToggle(this,drawerLayoutAllUsers,R.string.open, R.string.close)
+        toggle = ActionBarDrawerToggle(this,drawerLayoutAllUsers, R.string.open, R.string.close)
 //        drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -121,13 +127,6 @@ class AllUsersActivity : AppCompatActivity() {
         )
     }
 
-//    private fun addtoRecyclerview() {
-//
-//        println(allDataUsers[2])
-////        val recyclerview = findViewById<RecyclerView>(R.id.allUsersRV)
-////        val adapter = RVAdapter(allDataUsers)
-////        recyclerview.adapter = adapter
-//    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
